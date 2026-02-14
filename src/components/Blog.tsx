@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 
 const blogPosts = [
   {
@@ -44,7 +45,7 @@ export function Blog() {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
         >
           <div>
-            <p className="text-accent-gold text-sm font-medium tracking-[0.2em] uppercase mb-4">
+            <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
               Blog
             </p>
             <h2 className="font-display text-4xl md:text-5xl font-light text-white">
@@ -56,7 +57,7 @@ export function Blog() {
           </div>
           <a
             href="#"
-            className="text-accent-gold text-sm font-medium hover:underline flex items-center gap-2"
+            className="text-[#ff7a1a] text-sm font-medium hover:underline flex items-center gap-2"
           >
             View all posts →
           </a>
@@ -70,28 +71,31 @@ export function Blog() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group"
             >
-              <a href="#" className="block">
-                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-4">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-                <span className="text-zinc-500 text-xs">
-                  {post.date} · {post.readTime}
-                </span>
-                <h3 className="mt-2 text-lg font-medium text-white group-hover:text-accent-gold transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="mt-2 text-zinc-500 text-sm line-clamp-2">
-                  {post.excerpt}
-                </p>
-              </a>
+              <Card className="glass-glow overflow-hidden group hover:border-[#ff7a1a]/20 transition-all duration-500">
+                <a href="#">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  </div>
+                  <CardContent className="p-6">
+                    <span className="text-zinc-500 text-xs">
+                      {post.date} · {post.readTime}
+                    </span>
+                    <h3 className="mt-2 text-lg font-medium text-white group-hover:text-[#ff7a1a] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="mt-2 text-zinc-500 text-sm line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  </CardContent>
+                </a>
+              </Card>
             </motion.article>
           ))}
         </div>

@@ -1,14 +1,20 @@
-# Hospitality Management & Research Portfolio
+# Azamat Satullaev | Hospitality & Management Researcher
 
-A modern, premium portfolio website for a Hospitality Management & Research student. Built with Next.js 14, TypeScript, TailwindCSS, and Framer Motion.
+A premium, production-level portfolio website. Built with Next.js 14, TypeScript, TailwindCSS, Framer Motion, and ShadCN UI.
 
 ## Features
 
-- **Dark theme** with glassmorphism UI
-- **Smooth scroll animations** via Framer Motion
-- **Responsive design** for all devices
-- **Professional typography** (Inter + Playfair Display)
-- **Sections**: Hero, About, Research & Publications, Experience, Projects, Skills, Blog, Contact
+- **Cinematic Hero** — Animated gradient background (no static image)
+- **Animated Typography** — Text reveal, staggered motion
+- **Parallax Scroll** — Section reveal effects
+- **Glass Cards** — Blur, subtle glow, hover micro-interactions
+- **Loading Animation** — Premium initial load experience
+- **Cursor Glow** — Animated orange glow following cursor (desktop)
+- **Smooth Page Transitions** — Staggered content reveal
+- **Interactive Skills** — Animated layout with hover states
+- **Dark Theme** — Orange accent (#ff7a1a)
+- **SEO Optimized** — Meta tags, sitemap, robots.txt
+- **Fully Responsive** — Mobile-first design
 
 ## Tech Stack
 
@@ -16,40 +22,34 @@ A modern, premium portfolio website for a Hospitality Management & Research stud
 - TypeScript
 - TailwindCSS
 - Framer Motion
+- ShadCN UI (Button, Card, Input)
+- class-variance-authority, clsx, tailwind-merge
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000)
 
-## Build for Production
+## Build
 
 ```bash
 npm run build
 npm start
 ```
 
+## Deploy to Netlify
+
+1. Connect your GitHub repo to Netlify
+2. Build command: `npm run build`
+3. Publish directory: `.next` (handled by @netlify/plugin-nextjs)
+4. The `netlify.toml` is pre-configured
+
 ## Customization
 
-- **Content**: Edit section components in `src/components/`
-- **Colors**: Update `tailwind.config.ts` and `globals.css`
-- **Images**: Replace Unsplash URLs with your own (host images or use your own CDN)
-- **Contact form**: Integrate with your backend or email service (e.g., Formspree, Resend)
-- **SEO**: Update `src/app/robots.ts` and `src/app/sitemap.ts` with your production URL
-
-## Deployment
-
-Deploy to Vercel, Netlify, or any Node.js hosting:
-
-```bash
-npm run build
-```
-
-The site is production-ready and optimized for performance.
+- **Content**: Edit `src/components/`
+- **Colors**: `tailwind.config.ts`, `globals.css` (accent: #ff7a1a)
+- **SEO**: Update `src/app/robots.ts`, `src/app/sitemap.ts`, `metadataBase` in layout

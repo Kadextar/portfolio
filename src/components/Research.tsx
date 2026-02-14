@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const publications = [
   {
-    title:
-      "Sustainable Practices in Luxury Hospitality: A Comparative Analysis",
+    title: "Sustainable Practices in Luxury Hospitality: A Comparative Analysis",
     journal: "International Journal of Hospitality Management",
     year: "2024",
     type: "Research Paper",
@@ -40,7 +41,7 @@ export function Research() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-accent-gold text-sm font-medium tracking-[0.2em] uppercase mb-4">
+          <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
             Research & Publications
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-white">
@@ -53,35 +54,35 @@ export function Research() {
 
         <div className="space-y-6">
           {publications.map((pub, i) => (
-            <motion.article
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="glass-strong rounded-2xl p-8 md:p-10 hover:border-white/15 transition-colors group"
             >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                <div className="flex-1">
-                  <span className="text-accent-gold text-xs font-medium tracking-wider uppercase">
-                    {pub.type} · {pub.year}
-                  </span>
-                  <h3 className="mt-2 text-xl font-medium text-white group-hover:text-accent-gold transition-colors">
-                    {pub.title}
-                  </h3>
-                  <p className="mt-1 text-zinc-500 text-sm">{pub.journal}</p>
-                  <p className="mt-4 text-zinc-400 text-sm leading-relaxed">
-                    {pub.abstract}
-                  </p>
-                </div>
-                <a
-                  href="#"
-                  className="flex-shrink-0 text-accent-gold text-sm font-medium hover:underline"
-                >
-                  Read more →
-                </a>
-              </div>
-            </motion.article>
+              <Card className="glass-glow hover:border-[#ff7a1a]/20 hover:shadow-glow-orange transition-all duration-500 group">
+                <CardContent className="p-8 md:p-10">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div className="flex-1">
+                      <span className="text-[#ff7a1a] text-xs font-medium tracking-wider uppercase">
+                        {pub.type} · {pub.year}
+                      </span>
+                      <h3 className="mt-2 text-xl font-medium text-white group-hover:text-[#ff7a1a] transition-colors duration-300">
+                        {pub.title}
+                      </h3>
+                      <p className="mt-1 text-zinc-500 text-sm">{pub.journal}</p>
+                      <p className="mt-4 text-zinc-400 text-sm leading-relaxed">
+                        {pub.abstract}
+                      </p>
+                    </div>
+                    <Button variant="ghost" size="sm" asChild>
+                      <a href="#">Read more →</a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>

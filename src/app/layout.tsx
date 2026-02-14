@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { ClientProviders } from "@/components/ClientProviders";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,21 +19,28 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yoursite.com"),
-  title: "Portfolio | Hospitality Management & Research",
+  metadataBase: new URL("https://azamatsatullaev.com"),
+  title: "Azamat Satullaev | Hospitality & Management Researcher",
   description:
-    "Academic portfolio showcasing research, publications, and experience in Hospitality Management. International perspective with premium standards.",
+    "Blending strategy, analytics, and technology to shape the future of service industries. Academic portfolio showcasing research, publications, and hospitality experience.",
   keywords: [
+    "Azamat Satullaev",
     "hospitality management",
     "research",
     "academic portfolio",
     "hotel management",
     "tourism research",
+    "service industries",
   ],
-  authors: [{ name: "Portfolio" }],
+  authors: [{ name: "Azamat Satullaev" }],
   openGraph: {
-    title: "Hospitality Management & Research Portfolio",
-    description: "Academic portfolio for universities and industry professionals",
+    title: "Azamat Satullaev | Hospitality & Management Researcher",
+    description:
+      "Blending strategy, analytics, and technology to shape the future of service industries.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -47,7 +55,9 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[#050506] text-zinc-100 min-h-screen`}
       >
         <Navbar />
-        <main className="relative">{children}</main>
+        <ClientProviders>
+          <main className="relative">{children}</main>
+        </ClientProviders>
         <Footer />
         <ScrollToTop />
       </body>

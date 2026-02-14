@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
@@ -9,7 +12,6 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    // Simulate form submission - replace with actual API/email service
     setTimeout(() => setStatus("sent"), 1500);
   };
 
@@ -22,7 +24,7 @@ export function Contact() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-accent-gold text-sm font-medium tracking-[0.2em] uppercase mb-4">
+          <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
             Contact
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-white">
@@ -38,105 +40,103 @@ export function Contact() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-strong rounded-3xl p-8 md:p-12"
         >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-zinc-400 mb-2"
+          <Card className="glass-glow border-white/10 hover:border-[#ff7a1a]/20 transition-all duration-500">
+            <CardContent className="p-8 md:p-12">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-zinc-400 mb-2"
+                    >
+                      Name
+                    </label>
+                    <Input
+                      id="name"
+                      name="name"
+                      required
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-zinc-400 mb-2"
+                    >
+                      Email
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-zinc-400 mb-2"
+                  >
+                    Subject
+                  </label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    placeholder="Research collaboration, speaking, etc."
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-zinc-400 mb-2"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    required
+                    className="flex w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#ff7a1a]/50 focus:ring-1 focus:ring-[#ff7a1a]/30 transition-colors resize-none"
+                    placeholder="Tell me about your project or opportunity..."
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={status === "sending"}
+                  size="lg"
                 >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/30 transition-colors"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-zinc-400 mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/30 transition-colors"
-                  placeholder="you@example.com"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="subject"
-                className="block text-sm font-medium text-zinc-400 mb-2"
-              >
-                Subject
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/30 transition-colors"
-                placeholder="Research collaboration, speaking, etc."
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-zinc-400 mb-2"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={5}
-                required
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-600 focus:outline-none focus:border-accent-gold/50 focus:ring-1 focus:ring-accent-gold/30 transition-colors resize-none"
-                placeholder="Tell me about your project or opportunity..."
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="w-full md:w-auto px-10 py-4 bg-accent-gold text-black font-medium rounded-xl hover:bg-accent-gold-light transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {status === "idle" && "Send Message"}
-              {status === "sending" && "Sending..."}
-              {status === "sent" && "Message Sent ✓"}
-            </button>
-          </form>
+                  {status === "idle" && "Send Message"}
+                  {status === "sending" && "Sending..."}
+                  {status === "sent" && "Message Sent ✓"}
+                </Button>
+              </form>
 
-          <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-8 justify-center">
-            <a
-              href="mailto:contact@example.com"
-              className="text-zinc-400 hover:text-accent-gold transition-colors text-sm"
-            >
-              contact@example.com
-            </a>
-            <a
-              href="#"
-              className="text-zinc-400 hover:text-accent-gold transition-colors text-sm"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="#"
-              className="text-zinc-400 hover:text-accent-gold transition-colors text-sm"
-            >
-              ResearchGate
-            </a>
-          </div>
+              <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-8 justify-center">
+                <a
+                  href="mailto:contact@example.com"
+                  className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
+                >
+                  contact@example.com
+                </a>
+                <a
+                  href="#"
+                  className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="#"
+                  className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
+                >
+                  ResearchGate
+                </a>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       </div>
     </section>

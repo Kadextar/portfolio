@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://yoursite.com/sitemap.xml",
+    sitemap: "https://azamatsatullaev.com/sitemap.xml",
   };
 }
