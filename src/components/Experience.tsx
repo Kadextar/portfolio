@@ -1,33 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 
 const experiences = [
-  {
-    role: "Research Assistant",
-    organization: "Hospitality Research Center",
-    period: "2023 – Present",
-    description:
-      "Supporting faculty research on guest experience metrics and sustainable operations. Conducting literature reviews and data analysis.",
-  },
-  {
-    role: "Intern — Guest Relations",
-    organization: "Luxury Hotel Group",
-    period: "2022 – 2023",
-    description:
-      "Handled VIP guest requests, coordinated with housekeeping and F&B. Contributed to service recovery protocols.",
-  },
-  {
-    role: "Hospitality Trainee",
-    organization: "Boutique Resort",
-    period: "2021 – 2022",
-    description:
-      "Rotated through front office, concierge, and events. Gained hands-on experience in high-touch service delivery.",
-  },
-];
+  { roleKey: "role1", orgKey: "org1", periodKey: "period1", descKey: "desc1" },
+  { roleKey: "role2", orgKey: "org2", periodKey: "period2", descKey: "desc2" },
+  { roleKey: "role3", orgKey: "org3", periodKey: "period3", descKey: "desc3" },
+] as const;
 
 export function Experience() {
+  const t = useTranslations("experience");
+
   return (
     <section id="experience" className="py-24 md:py-32 relative">
       <div className="max-w-7xl mx-auto px-6">
@@ -38,14 +23,12 @@ export function Experience() {
           className="text-center mb-16"
         >
           <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
-            Hospitality Experience
+            {t("label")}
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-white">
-            Industry & Academic Journey
+            {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">
-            From hands-on operations to research-driven insights
-          </p>
+          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <div className="max-w-3xl mx-auto space-y-8">
@@ -66,14 +49,14 @@ export function Experience() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <span className="text-[#ff7a1a] text-sm font-medium">
-                      {exp.period}
+                      {t(exp.periodKey)}
                     </span>
                     <h3 className="text-xl font-medium text-white mt-1">
-                      {exp.role}
+                      {t(exp.roleKey)}
                     </h3>
-                    <p className="text-zinc-500 text-sm">{exp.organization}</p>
+                    <p className="text-zinc-500 text-sm">{t(exp.orgKey)}</p>
                     <p className="mt-4 text-zinc-400 text-sm leading-relaxed">
-                      {exp.description}
+                      {t(exp.descKey)}
                     </p>
                   </div>
                 </CardContent>

@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useLocale } from "next-intl";
 import { LoadingScreen } from "./LoadingScreen";
 import { CursorGlow } from "./CursorGlow";
 import { PageTransition } from "./PageTransition";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
+  const locale = useLocale();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2200);
@@ -21,7 +23,15 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
         {isLoading ? (
           <LoadingScreen key="loader" />
         ) : (
-          <PageTransition key="content">{children}</PageTransition>
+          <motion.div
+            key={locale}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <PageTransition>{children}</PageTransition>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function Contact() {
+  const t = useTranslations("contact");
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,15 +27,12 @@ export function Contact() {
           className="text-center mb-16"
         >
           <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
-            Contact
+            {t("label")}
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-white">
-            Let&apos;s Connect
+            {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-xl mx-auto">
-            Open to research collaborations, speaking opportunities, and
-            industry connections. Universities and organizations welcome.
-          </p>
+          <p className="mt-4 text-zinc-500 max-w-xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <motion.div
@@ -50,13 +49,13 @@ export function Contact() {
                       htmlFor="name"
                       className="block text-sm font-medium text-zinc-400 mb-2"
                     >
-                      Name
+                      {t("name")}
                     </label>
                     <Input
                       id="name"
                       name="name"
                       required
-                      placeholder="Your name"
+                      placeholder={t("placeholderName")}
                     />
                   </div>
                   <div>
@@ -64,14 +63,14 @@ export function Contact() {
                       htmlFor="email"
                       className="block text-sm font-medium text-zinc-400 mb-2"
                     >
-                      Email
+                      {t("email")}
                     </label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
                       required
-                      placeholder="you@example.com"
+                      placeholder={t("placeholderEmail")}
                     />
                   </div>
                 </div>
@@ -80,12 +79,12 @@ export function Contact() {
                     htmlFor="subject"
                     className="block text-sm font-medium text-zinc-400 mb-2"
                   >
-                    Subject
+                    {t("subject")}
                   </label>
                   <Input
                     id="subject"
                     name="subject"
-                    placeholder="Research collaboration, speaking, etc."
+                    placeholder={t("placeholderSubject")}
                   />
                 </div>
                 <div>
@@ -93,7 +92,7 @@ export function Contact() {
                     htmlFor="message"
                     className="block text-sm font-medium text-zinc-400 mb-2"
                   >
-                    Message
+                    {t("message")}
                   </label>
                   <textarea
                     id="message"
@@ -101,7 +100,7 @@ export function Contact() {
                     rows={5}
                     required
                     className="flex w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#ff7a1a]/50 focus:ring-1 focus:ring-[#ff7a1a]/30 transition-colors resize-none"
-                    placeholder="Tell me about your project or opportunity..."
+                    placeholder={t("placeholderMessage")}
                   />
                 </div>
                 <Button
@@ -109,9 +108,9 @@ export function Contact() {
                   disabled={status === "sending"}
                   size="lg"
                 >
-                  {status === "idle" && "Send Message"}
-                  {status === "sending" && "Sending..."}
-                  {status === "sent" && "Message Sent ✓"}
+                  {status === "idle" && t("send")}
+                  {status === "sending" && t("sending")}
+                  {status === "sent" && t("sent")}
                 </Button>
               </form>
 
@@ -126,13 +125,13 @@ export function Contact() {
                   href="#"
                   className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
                 >
-                  LinkedIn
+                  {t("linkedin")}
                 </a>
                 <a
                   href="#"
                   className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
                 >
-                  ResearchGate
+                  {t("researchgate")}
                 </a>
               </div>
             </CardContent>

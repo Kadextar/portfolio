@@ -1,45 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
-const skillCategories = [
+const categories = [
   {
-    title: "Research & Analysis",
+    titleKey: "cat1Title",
     icon: "📊",
-    skills: [
-      "Qualitative & Quantitative Research",
-      "Literature Review",
-      "Data Analysis (SPSS, Excel)",
-      "Academic Writing",
-      "Survey Design",
-    ],
+    skillKeys: ["skill1_1", "skill1_2", "skill1_3", "skill1_4", "skill1_5"],
   },
   {
-    title: "Hospitality Operations",
+    titleKey: "cat2Title",
     icon: "🏨",
-    skills: [
-      "Guest Relations",
-      "Revenue Management",
-      "Service Design",
-      "Quality Standards",
-      "Event Coordination",
-    ],
+    skillKeys: ["skill2_1", "skill2_2", "skill2_3", "skill2_4", "skill2_5"],
   },
   {
-    title: "Strategic & Soft Skills",
+    titleKey: "cat3Title",
     icon: "🎯",
-    skills: [
-      "Strategic Planning",
-      "Cross-cultural Communication",
-      "Project Management",
-      "Presentation",
-      "Leadership",
-    ],
+    skillKeys: ["skill3_1", "skill3_2", "skill3_3", "skill3_4", "skill3_5"],
   },
-];
+] as const;
 
 export function Skills() {
+  const t = useTranslations("skills");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -53,14 +37,12 @@ export function Skills() {
           className="text-center mb-16"
         >
           <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
-            Skills & Competencies
+            {t("label")}
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-white">
-            Expertise & Capabilities
+            {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">
-            A blend of academic rigor and industry-relevant skills
-          </p>
+          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <motion.div
@@ -79,9 +61,9 @@ export function Skills() {
           }}
           className="grid md:grid-cols-3 gap-8"
         >
-          {skillCategories.map((category, i) => (
+          {categories.map((category, i) => (
             <motion.div
-              key={i}
+              key={category.titleKey}
               variants={{
                 hidden: { opacity: 0, y: 40, scale: 0.95 },
                 visible: {
@@ -101,8 +83,14 @@ export function Skills() {
               <motion.div
                 animate={{
                   scale: hoveredIndex === i ? 1.02 : 1,
-                  borderColor: hoveredIndex === i ? "rgba(255, 122, 26, 0.3)" : "rgba(255, 255, 255, 0.1)",
-                  boxShadow: hoveredIndex === i ? "0 0 40px rgba(255, 122, 26, 0.15)" : "none",
+                  borderColor:
+                    hoveredIndex === i
+                      ? "rgba(255, 122, 26, 0.3)"
+                      : "rgba(255, 255, 255, 0.1)",
+                  boxShadow:
+                    hoveredIndex === i
+                      ? "0 0 40px rgba(255, 122, 26, 0.15)"
+                      : "none",
                 }}
                 transition={{ duration: 0.3 }}
                 className="glass-glow rounded-2xl p-8 h-full"
@@ -114,12 +102,12 @@ export function Skills() {
                   {category.icon}
                 </motion.div>
                 <h3 className="text-lg font-medium text-[#ff7a1a] mb-6">
-                  {category.title}
+                  {t(category.titleKey)}
                 </h3>
                 <ul className="space-y-3">
-                  {category.skills.map((skill, j) => (
+                  {category.skillKeys.map((skillKey, j) => (
                     <motion.li
-                      key={j}
+                      key={skillKey}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -129,11 +117,14 @@ export function Skills() {
                       <motion.span
                         animate={{
                           scale: hoveredIndex === i ? 1.5 : 1,
-                          backgroundColor: hoveredIndex === i ? "rgba(255, 122, 26, 1)" : "rgba(255, 122, 26, 0.6)",
+                          backgroundColor:
+                            hoveredIndex === i
+                              ? "rgba(255, 122, 26, 1)"
+                              : "rgba(255, 122, 26, 0.6)",
                         }}
                         className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                       />
-                      {skill}
+                      {t(skillKey)}
                     </motion.li>
                   ))}
                 </ul>

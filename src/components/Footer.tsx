@@ -1,8 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link as I18nLink } from "@/i18n/navigation";
 
 export function Footer() {
+  const t = useTranslations("footer");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -10,32 +12,30 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-zinc-500 text-sm">
-            © {currentYear} Azamat Satullaev. All rights reserved.
+            © {currentYear} {t("copyright")}
           </p>
           <div className="flex items-center gap-8">
-            <Link
+            <I18nLink
               href="#about"
               className="text-zinc-500 hover:text-[#ff7a1a] text-sm transition-colors"
             >
-              About
-            </Link>
-            <Link
+              {t("about")}
+            </I18nLink>
+            <I18nLink
               href="#research"
               className="text-zinc-500 hover:text-[#ff7a1a] text-sm transition-colors"
             >
-              Research
-            </Link>
-            <Link
+              {t("research")}
+            </I18nLink>
+            <I18nLink
               href="#contact"
               className="text-zinc-500 hover:text-[#ff7a1a] text-sm transition-colors"
             >
-              Contact
-            </Link>
+              {t("contact")}
+            </I18nLink>
           </div>
         </div>
-        <p className="mt-6 text-center text-zinc-600 text-xs">
-          Hospitality & Management Research · Blending strategy, analytics, and technology
-        </p>
+        <p className="mt-6 text-center text-zinc-600 text-xs">{t("tagline")}</p>
       </div>
     </footer>
   );

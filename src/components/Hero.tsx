@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 const container = {
@@ -27,9 +28,10 @@ const item = {
 };
 
 export function Hero() {
+  const t = useTranslations("hero");
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated gradient background */}
       <div className="absolute inset-0 z-0">
         <div
           className="absolute inset-0 opacity-40"
@@ -40,7 +42,6 @@ export function Hero() {
             animation: "gradient-shift 12s ease infinite",
           }}
         />
-        {/* Animated gradient orbs */}
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
@@ -65,7 +66,6 @@ export function Hero() {
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/2 left-1/2 w-[400px] h-[400px] rounded-full bg-[#ff7a1a] blur-[80px] -translate-x-1/2 -translate-y-1/2"
         />
-        {/* Grid overlay */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -87,23 +87,22 @@ export function Hero() {
             variants={item}
             className="text-[#ff7a1a] text-sm font-medium tracking-[0.3em] uppercase"
           >
-            Hospitality & Management Researcher
+            {t("subtitle")}
           </motion.p>
 
           <motion.h1
             variants={item}
             className="font-display text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-white"
           >
-            <span className="block">Azamat</span>
-            <span className="block text-[#ff7a1a]">Satullaev</span>
+            <span className="block">{t("titleFirst")}</span>
+            <span className="block text-[#ff7a1a]">{t("titleLast")}</span>
           </motion.h1>
 
           <motion.p
             variants={item}
             className="max-w-2xl mx-auto text-zinc-400 text-lg md:text-xl font-light leading-relaxed"
           >
-            Blending strategy, analytics, and technology to shape the future of
-            service industries.
+            {t("tagline")}
           </motion.p>
         </motion.div>
 
@@ -114,14 +113,13 @@ export function Hero() {
           className="mt-16 flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Button asChild size="lg" className="rounded-full">
-            <a href="#research">View Research</a>
+            <a href="#research">{t("viewResearch")}</a>
           </Button>
           <Button asChild variant="glass" size="lg" className="rounded-full">
-            <a href="#contact">Get in Touch</a>
+            <a href="#contact">{t("getInTouch")}</a>
           </Button>
         </motion.div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

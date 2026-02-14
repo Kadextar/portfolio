@@ -6,8 +6,14 @@ import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
 import { Blog } from "@/components/Blog";
 import { Contact } from "@/components/Contact";
+import { setRequestLocale } from "next-intl/server";
 
-export default function Home() {
+type Props = { params: Promise<{ locale: string }> };
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <>
       <Hero />
