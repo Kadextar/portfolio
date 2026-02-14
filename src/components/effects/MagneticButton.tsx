@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionTemplate } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
 
 const MAGNETIC_STRENGTH = 0.35;
 const SPRING = { stiffness: 400, damping: 25 };
@@ -22,8 +22,8 @@ export function MagneticButton({
   ...props
 }: MagneticButtonProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const x = motion.useMotionValue(0);
-  const y = motion.useMotionValue(0);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
@@ -41,7 +41,7 @@ export function MagneticButton({
     y.set(0);
   };
 
-  const translate = motion.useMotionTemplate`translate(${x}px, ${y}px)`;
+  const translate = useMotionTemplate`translate(${x}px, ${y}px)`;
 
   const content = (
     <motion.span
