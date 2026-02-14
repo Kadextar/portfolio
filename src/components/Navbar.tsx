@@ -9,9 +9,12 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const navKeys = [
   "about",
+  "strategicVision",
+  "leadershipRecognition",
   "research",
   "experience",
   "projects",
+  "digitalInnovation",
   "skills",
   "blog",
   "contact",
@@ -41,7 +44,7 @@ export function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link
           href="/"
-          className="font-display text-xl font-semibold tracking-tight text-zinc-100 hover:text-[#ff7a1a] transition-colors duration-300"
+          className="font-display text-xl font-semibold tracking-tight text-zinc-100 hover:text-accent transition-colors duration-200"
         >
           A.Satullaev
         </Link>
@@ -52,7 +55,7 @@ export function Navbar() {
               <li key={key}>
                 <a
                   href={`#${key}`}
-                  className="text-sm font-medium text-zinc-400 hover:text-[#ff7a1a] transition-colors duration-300 tracking-wide"
+                  className="nav-link-underline text-sm font-medium text-zinc-400 hover:text-accent transition-colors duration-200 tracking-wide"
                 >
                   {t(key)}
                 </a>
@@ -66,7 +69,7 @@ export function Navbar() {
           <LanguageSwitcher />
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-zinc-400 hover:text-[#ff7a1a] transition-colors"
+            className="p-2 text-zinc-400 hover:text-accent transition-colors"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +97,7 @@ export function Navbar() {
                   <a
                     href={`#${key}`}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-zinc-300 hover:text-[#ff7a1a] transition-colors py-2"
+                    className="nav-link-underline block text-zinc-300 hover:text-accent transition-colors py-2"
                   >
                     {t(key)}
                   </a>

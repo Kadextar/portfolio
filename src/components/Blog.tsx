@@ -15,26 +15,26 @@ export function Blog() {
   const t = useTranslations("blog");
 
   return (
-    <section id="blog" className="py-24 md:py-32 relative">
+    <section id="blog" className="py-28 md:py-40 relative">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20"
         >
           <div>
-            <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
+            <p className="text-accent text-xs font-medium tracking-[0.28em] uppercase mb-4">
               {t("label")}
             </p>
-            <h2 className="font-display text-4xl md:text-5xl font-light text-white">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
               {t("title")}
             </h2>
             <p className="mt-4 text-zinc-500 max-w-xl">{t("subtitle")}</p>
           </div>
           <a
             href="#"
-            className="text-[#ff7a1a] text-sm font-medium hover:underline flex items-center gap-2"
+            className="text-accent text-sm font-medium hover:underline flex items-center gap-2 transition-colors"
           >
             {t("viewAll")}
           </a>
@@ -44,19 +44,19 @@ export function Blog() {
           {([1, 2, 3] as const).map((i, idx) => (
             <motion.article
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ duration: 0.5, delay: idx * 0.06 }}
             >
-              <Card className="glass-glow overflow-hidden group hover:border-[#ff7a1a]/20 transition-all duration-500">
+              <Card className="glass-glow overflow-hidden group hover:border-white/12 transition-colors duration-300">
                 <a href="#">
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={postImages[idx]}
                       alt={t(`post${i}Title`)}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
@@ -64,7 +64,7 @@ export function Blog() {
                     <span className="text-zinc-500 text-xs">
                       {t(`post${i}Date`)} · {t(`post${i}ReadTime`)} {t("minRead")}
                     </span>
-                    <h3 className="mt-2 text-lg font-medium text-white group-hover:text-[#ff7a1a] transition-colors line-clamp-2">
+                    <h3 className="mt-2 text-lg font-medium text-white group-hover:text-accent transition-colors duration-200 line-clamp-2">
                       {t(`post${i}Title`)}
                     </h3>
                     <p className="mt-2 text-zinc-500 text-sm line-clamp-2">

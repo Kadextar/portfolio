@@ -18,29 +18,29 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 relative">
+    <section id="contact" className="py-28 md:py-40 relative">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
+          <p className="text-accent text-xs font-medium tracking-[0.28em] uppercase mb-4">
             {t("label")}
           </p>
-          <h2 className="font-display text-4xl md:text-5xl font-light text-white">
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
           <p className="mt-4 text-zinc-500 max-w-xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <Card className="glass-glow border-white/10 hover:border-[#ff7a1a]/20 transition-all duration-500">
+          <Card className="glass-glow border-white/10 hover:border-white/15 transition-colors duration-300">
             <CardContent className="p-8 md:p-12">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -99,7 +99,7 @@ export function Contact() {
                     name="message"
                     rows={5}
                     required
-                    className="flex w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#ff7a1a]/50 focus:ring-1 focus:ring-[#ff7a1a]/30 transition-colors resize-none"
+                    className="flex w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-colors resize-none"
                     placeholder={t("placeholderMessage")}
                   />
                 </div>
@@ -107,6 +107,7 @@ export function Contact() {
                   type="submit"
                   disabled={status === "sending"}
                   size="lg"
+                  className="btn-glow transition-shadow duration-300"
                 >
                   {status === "idle" && t("send")}
                   {status === "sending" && t("sending")}
@@ -117,19 +118,19 @@ export function Contact() {
               <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-8 justify-center">
                 <a
                   href="mailto:contact@example.com"
-                  className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
+                  className="text-zinc-400 hover:text-accent transition-colors text-sm"
                 >
                   contact@example.com
                 </a>
                 <a
                   href="#"
-                  className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
+                  className="text-zinc-400 hover:text-accent transition-colors text-sm"
                 >
                   {t("linkedin")}
                 </a>
                 <a
                   href="#"
-                  className="text-zinc-400 hover:text-[#ff7a1a] transition-colors text-sm"
+                  className="text-zinc-400 hover:text-accent transition-colors text-sm"
                 >
                   {t("researchgate")}
                 </a>

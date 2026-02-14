@@ -18,6 +18,9 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+const BASE_URL = "https://azamatsatullaev.com";
+const LOCALES_META = ["en", "ru", "uz"] as const;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const titles: Record<string, string> = {
@@ -30,13 +33,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ru: "Стратегия, аналитика и технологии для будущего индустрии услуг.",
     uz: "Strategiya, tahlil va texnologiyalar orqali xizmatlar sanoatining kelajagini shakllantirish.",
   };
+  const canonical = `${BASE_URL}/${locale}`;
+  const languages: Record<string, string> = {};
+  for (const loc of LOCALES_META) {
+    languages[loc] = `${BASE_URL}/${loc}`;
+  }
   return {
-    metadataBase: new URL("https://azamatsatullaev.com"),
+    metadataBase: new URL(BASE_URL),
     title: titles[locale] ?? titles.en,
     description: descriptions[locale] ?? descriptions.en,
+    alternates: {
+      canonical,
+      languages,
+    },
     openGraph: {
       title: titles[locale] ?? titles.en,
       description: descriptions[locale] ?? descriptions.en,
+      locale: locale === "en" ? "en_US" : locale === "ru" ? "ru_RU" : "uz_UZ",
+      url: canonical,
     },
   };
 }

@@ -1,15 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
+
+const CURSOR_SMOOTH = 0.12;
 
 export function CursorGlow() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const xTarget = useMotionValue(0);
+  const yTarget = useMotionValue(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      xTarget.set(e.clientX);
+      yTarget.set(e.clientY);
       setIsVisible(true);
     };
 
@@ -18,61 +24,74 @@ export function CursorGlow() {
     window.addEventListener("mousemove", handleMouseMove);
     document.body.addEventListener("mouseleave", handleMouseLeave);
 
+    let raf: number;
+    const animate = () => {
+      const xVal = x.get();
+      const yVal = y.get();
+      const xT = xTarget.get();
+      const yT = yTarget.get();
+      x.set(xVal + (xT - xVal) * CURSOR_SMOOTH);
+      y.set(yVal + (yT - yVal) * CURSOR_SMOOTH);
+      raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.body.removeEventListener("mouseleave", handleMouseLeave);
+      cancelAnimationFrame(raf);
     };
-  }, []);
-
-  if (typeof window === "undefined") return null;
+  }, [x, y, xTarget, yTarget]);
 
   return (
     <>
-      {/* Outer glow - only on desktop */}
+      {/* Outer glow */}
       <motion.div
         className="pointer-events-none fixed z-[9999] hidden md:block"
-        animate={{
-          x: position.x,
-          y: position.y,
+        style={{
+          left: x,
+          top: y,
+          x: "-50%",
+          y: "-50%",
+          width: 520,
+          height: 520,
+          background:
+            "radial-gradient(circle, rgba(255, 122, 26, 0.07) 0%, rgba(255, 122, 26, 0.02) 40%, transparent 70%)",
           opacity: isVisible ? 1 : 0,
         }}
-        transition={{
-          type: "spring",
-          damping: 30,
-          stiffness: 200,
-          opacity: { duration: 0.2 },
-        }}
+        transition={{ opacity: { duration: 0.25 } }}
+      />
+      {/* Mid glow */}
+      <motion.div
+        className="pointer-events-none fixed z-[9999] hidden md:block"
         style={{
-          width: 400,
-          height: 400,
-          marginLeft: -200,
-          marginTop: -200,
+          left: x,
+          top: y,
+          x: "-50%",
+          y: "-50%",
+          width: 200,
+          height: 200,
           background:
-            "radial-gradient(circle, rgba(255, 122, 26, 0.08) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(255, 122, 26, 0.12) 0%, transparent 65%)",
+          opacity: isVisible ? 1 : 0,
         }}
+        transition={{ opacity: { duration: 0.2 } }}
       />
       {/* Inner spot */}
       <motion.div
         className="pointer-events-none fixed z-[9999] hidden md:block"
-        animate={{
-          x: position.x,
-          y: position.y,
+        style={{
+          left: x,
+          top: y,
+          x: "-50%",
+          y: "-50%",
+          width: 72,
+          height: 72,
+          background:
+            "radial-gradient(circle, rgba(255, 122, 26, 0.18) 0%, transparent 70%)",
           opacity: isVisible ? 1 : 0,
         }}
-        transition={{
-          type: "spring",
-          damping: 35,
-          stiffness: 300,
-          opacity: { duration: 0.2 },
-        }}
-        style={{
-          width: 80,
-          height: 80,
-          marginLeft: -40,
-          marginTop: -40,
-          background:
-            "radial-gradient(circle, rgba(255, 122, 26, 0.15) 0%, transparent 70%)",
-        }}
+        transition={{ opacity: { duration: 0.15 } }}
       />
     </>
   );

@@ -4,23 +4,23 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 98%;
-    --primary: 24 100% 55%;
-    --primary-foreground: 0 0% 0%;
+    --background: 0 0% 3%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 96%;
+    --primary: 43 58% 49%;
+    --primary-foreground: 0 0% 6%;
     --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 64%;
-    --accent: 24 100% 55%;
-    --accent-foreground: 0 0% 98%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 58%;
+    --accent: 43 58% 49%;
+    --accent-foreground: 0 0% 6%;
     --destructive: 0 84% 60%;
     --border: 0 0% 14%;
     --input: 0 0% 14%;
-    --ring: 24 100% 55%;
-    --radius: 0.75rem;
+    --ring: 43 58% 49%;
+    --radius: 0.5rem;
   }
 }
 
@@ -53,12 +53,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 122, 26, 0.3);
+  background: rgba(201, 162, 39, 0.25);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 122, 26, 0.5);
+  background: rgba(201, 162, 39, 0.4);
 }
 
 /* Glassmorphism */
@@ -81,8 +81,7 @@ body {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 122, 26, 0.15);
-    box-shadow: 0 0 40px rgba(255, 122, 26, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .text-balance {
@@ -91,7 +90,7 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 122, 26, 0.3);
+  background: rgba(201, 162, 39, 0.25);
   color: #fff;
 }
 
@@ -103,4 +102,67 @@ body {
   50% {
     background-position: 100% 50%;
   }
+}
+
+/* Section gradient overlays — subtle warmth */
+.section-gradient-warm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 0%,
+    rgba(201, 162, 39, 0.03) 0%,
+    transparent 50%
+  );
+  z-index: 0;
+}
+
+.section-gradient-cool::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 40% at 50% 100%,
+    rgba(201, 162, 39, 0.02) 0%,
+    transparent 50%
+  );
+  z-index: 0;
+}
+
+.section-gradient-accent::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 60% 60% at 80% 20%,
+    rgba(201, 162, 39, 0.025) 0%,
+    transparent 50%
+  );
+  z-index: 0;
+}
+
+/* Micro-interactions: link hover underline */
+.nav-link-underline {
+  position: relative;
+}
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+.nav-link-underline:hover::after {
+  width: 100%;
+}
+
+/* Button hover — subtle emphasis */
+.btn-glow:hover {
+  border-color: rgba(255, 255, 255, 0.12);
 }

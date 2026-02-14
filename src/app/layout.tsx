@@ -1,4 +1,5 @@
 import { Inter, Playfair_Display } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,13 +14,21 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-export default function RootLayout({
+const LOCALES = ["en", "ru", "uz"] as const;
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = await headers();
+  const localeHeader = headersList.get("x-next-locale") ?? "en";
+  const lang = LOCALES.includes(localeHeader as (typeof LOCALES)[number])
+    ? localeHeader
+    : "en";
+
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang={lang} className="dark" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[#050506] text-zinc-100 min-h-screen`}
       >

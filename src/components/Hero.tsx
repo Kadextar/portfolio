@@ -1,82 +1,63 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 
 const container = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.3,
+      staggerChildren: 0.08,
+      delayChildren: 0.15,
     },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 export function Hero() {
   const t = useTranslations("hero");
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 0.4], [0, -20]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.5]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <div
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(135deg, #0a0a0b 0%, #1a0f05 25%, #0d0a08 50%, #150a03 75%, #0a0a0b 100%)",
-            backgroundSize: "400% 400%",
-            animation: "gradient-shift 12s ease infinite",
+              "linear-gradient(180deg, #080808 0%, #0c0b08 40%, #080808 100%)",
           }}
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-[#ff7a1a] blur-[120px] -translate-x-1/2 -translate-y-1/2"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#ff7a1a] blur-[100px] translate-x-1/2 translate-y-1/2"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.15, 0.3, 0.15],
-          }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/2 left-1/2 w-[400px] h-[400px] rounded-full bg-[#ff7a1a] blur-[80px] -translate-x-1/2 -translate-y-1/2"
         />
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)`,
+            backgroundSize: "80px 80px",
           }}
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+      <motion.div
+        style={{ y, opacity }}
+        className="relative z-10 max-w-7xl mx-auto px-6 text-center"
+      >
         <motion.div
           variants={container}
           initial="hidden"
@@ -85,56 +66,65 @@ export function Hero() {
         >
           <motion.p
             variants={item}
-            className="text-[#ff7a1a] text-sm font-medium tracking-[0.3em] uppercase"
+            className="text-accent text-xs font-medium tracking-[0.28em] uppercase"
           >
             {t("subtitle")}
           </motion.p>
 
           <motion.h1
             variants={item}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-white"
+            className="font-display text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white"
           >
             <span className="block">{t("titleFirst")}</span>
-            <span className="block text-[#ff7a1a]">{t("titleLast")}</span>
+            <span className="block text-accent">{t("titleLast")}</span>
           </motion.h1>
 
           <motion.p
             variants={item}
-            className="max-w-2xl mx-auto text-zinc-400 text-lg md:text-xl font-light leading-relaxed"
+            className="text-zinc-500 text-sm md:text-base font-medium tracking-wide"
+          >
+            {t("institution")}
+          </motion.p>
+
+          <motion.p
+            variants={item}
+            className="max-w-2xl mx-auto text-zinc-400 text-base md:text-lg font-light leading-relaxed"
           >
             {t("tagline")}
           </motion.p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-16 flex flex-col sm:flex-row gap-4 justify-center"
+          transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-20 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button asChild size="lg" className="rounded-full">
-            <a href="#research">{t("viewResearch")}</a>
-          </Button>
-          <Button asChild variant="glass" size="lg" className="rounded-full">
-            <a href="#contact">{t("getInTouch")}</a>
-          </Button>
+          <a
+            href="#research"
+            className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-10 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-light"
+          >
+            {t("viewResearch")}
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex h-12 items-center justify-center rounded-md border border-white/15 bg-white/5 px-10 text-sm font-medium text-white transition-colors hover:border-white/25 hover:bg-white/10"
+          >
+            {t("getInTouch")}
+          </a>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.6 }}
+          transition={{ delay: 1 }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2"
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2"
-          >
-            <div className="w-1 h-2 bg-[#ff7a1a]/80 rounded-full" />
-          </motion.div>
+          <div className="w-6 h-10 rounded-full border border-white/15 flex justify-center pt-2">
+            <div className="w-1 h-2 bg-accent/70 rounded-full" />
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

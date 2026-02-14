@@ -19,38 +19,19 @@ export function LoadingScreen() {
         >
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="h-16 w-16 rounded-full border-2 border-[#ff7a1a]/30 border-t-[#ff7a1a]"
+            transition={{ duration: 1.8, repeat: Infinity, ease: "linear" }}
+            className="h-12 w-12 rounded-full border border-accent/30 border-t-accent"
           />
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
             className="absolute inset-0 flex items-center justify-center"
           >
-            <span className="font-display text-2xl font-light text-[#ff7a1a]">
+            <span className="font-display text-xl font-normal text-accent">
               A
             </span>
           </motion.div>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex gap-1"
-        >
-          {[0, 1, 2].map((i) => (
-            <motion.span
-              key={i}
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{
-                duration: 1.2,
-                repeat: Infinity,
-                delay: i * 0.2,
-              }}
-              className="h-1.5 w-1.5 rounded-full bg-[#ff7a1a]"
-            />
-          ))}
         </motion.div>
       </div>
     </motion.div>

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { LoadingScreen } from "./LoadingScreen";
-import { CursorGlow } from "./CursorGlow";
 import { PageTransition } from "./PageTransition";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
@@ -12,13 +11,12 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   const locale = useLocale();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2200);
+    const timer = setTimeout(() => setIsLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      <CursorGlow />
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loader" />

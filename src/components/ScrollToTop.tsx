@@ -26,7 +26,7 @@ export function ScrollToTop() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full glass flex items-center justify-center text-[#ff7a1a] hover:bg-white/10 hover:border-[#ff7a1a]/30 transition-colors"
+          className="fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full glass flex items-center justify-center text-accent hover:bg-white/10 hover:border-white/15 transition-colors"
           aria-label="Scroll to top"
         >
           <svg

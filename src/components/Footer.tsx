@@ -17,19 +17,19 @@ export function Footer() {
           <div className="flex items-center gap-8">
             <I18nLink
               href="#about"
-              className="text-zinc-500 hover:text-[#ff7a1a] text-sm transition-colors"
+              className="text-zinc-500 hover:text-accent text-sm transition-colors"
             >
               {t("about")}
             </I18nLink>
             <I18nLink
               href="#research"
-              className="text-zinc-500 hover:text-[#ff7a1a] text-sm transition-colors"
+              className="text-zinc-500 hover:text-accent text-sm transition-colors"
             >
               {t("research")}
             </I18nLink>
             <I18nLink
               href="#contact"
-              className="text-zinc-500 hover:text-[#ff7a1a] text-sm transition-colors"
+              className="text-zinc-500 hover:text-accent text-sm transition-colors"
             >
               {t("contact")}
             </I18nLink>

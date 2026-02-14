@@ -28,18 +28,18 @@ export function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section id="skills" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="skills" className="py-28 md:py-40 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <p className="text-[#ff7a1a] text-sm font-medium tracking-[0.2em] uppercase mb-4">
+          <p className="text-accent text-xs font-medium tracking-[0.28em] uppercase mb-4">
             {t("label")}
           </p>
-          <h2 className="font-display text-4xl md:text-5xl font-light text-white">
+          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
           <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
@@ -65,13 +65,12 @@ export function Skills() {
             <motion.div
               key={category.titleKey}
               variants={{
-                hidden: { opacity: 0, y: 40, scale: 0.95 },
+                hidden: { opacity: 0, y: 24 },
                 visible: {
                   opacity: 1,
                   y: 0,
-                  scale: 1,
                   transition: {
-                    duration: 0.6,
+                    duration: 0.5,
                     ease: [0.22, 1, 0.36, 1],
                   },
                 },
@@ -82,26 +81,18 @@ export function Skills() {
             >
               <motion.div
                 animate={{
-                  scale: hoveredIndex === i ? 1.02 : 1,
                   borderColor:
                     hoveredIndex === i
-                      ? "rgba(255, 122, 26, 0.3)"
-                      : "rgba(255, 255, 255, 0.1)",
-                  boxShadow:
-                    hoveredIndex === i
-                      ? "0 0 40px rgba(255, 122, 26, 0.15)"
-                      : "none",
+                      ? "rgba(255, 255, 255, 0.14)"
+                      : "rgba(255, 255, 255, 0.08)",
                 }}
-                transition={{ duration: 0.3 }}
-                className="glass-glow rounded-2xl p-8 h-full"
+                transition={{ duration: 0.25 }}
+                className="glass-glow rounded-xl p-8 h-full"
               >
-                <motion.div
-                  animate={{ rotate: hoveredIndex === i ? 5 : 0 }}
-                  className="text-3xl mb-6"
-                >
+                <div className="text-3xl mb-6">
                   {category.icon}
-                </motion.div>
-                <h3 className="text-lg font-medium text-[#ff7a1a] mb-6">
+                </div>
+                <h3 className="text-lg font-medium text-accent mb-6">
                   {t(category.titleKey)}
                 </h3>
                 <ul className="space-y-3">
@@ -114,16 +105,7 @@ export function Skills() {
                       transition={{ delay: 0.1 * j }}
                       className="text-zinc-400 text-sm flex items-center gap-2 group"
                     >
-                      <motion.span
-                        animate={{
-                          scale: hoveredIndex === i ? 1.5 : 1,
-                          backgroundColor:
-                            hoveredIndex === i
-                              ? "rgba(255, 122, 26, 1)"
-                              : "rgba(255, 122, 26, 0.6)",
-                        }}
-                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                      />
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent/80 flex-shrink-0" />
                       {t(skillKey)}
                     </motion.li>
                   ))}
