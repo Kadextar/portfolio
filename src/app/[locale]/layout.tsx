@@ -70,7 +70,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <LocaleSync locale={locale} />
       <Navbar />
       <ClientProviders>
-        <main className="relative">{children}</main>
+        <main className="relative min-h-screen">{children}</main>
       </ClientProviders>
       <Footer />
       <ScrollToTop />

@@ -20,7 +20,7 @@ export function About() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0.85, 1]);
 
   return (
-    <section ref={ref} id="about" className="section-gradient-warm py-28 md:py-40 relative overflow-hidden">
+    <section ref={ref} id="about" className="py-28 md:py-40 relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <motion.div style={{ y, opacity }} className="space-y-8">
@@ -82,7 +82,7 @@ export function About() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Card className="glass-glow border-white/10 hover:border-white/15 transition-colors duration-300">
+            <Card className="glass-glow border-white/10 hover:border-white/15 transition-all duration-300 hover:translate-y-[-2px]">
               <CardContent className="p-8 md:p-12">
                 <h3 className="text-lg font-medium text-white mb-6">
                   {t("focusTitle")}

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { MagneticNavLink } from "./MagneticNavLink";
 
 const navKeys = [
   "about",
@@ -53,12 +54,12 @@ export function Navbar() {
           <ul className="flex items-center gap-8">
             {navKeys.map((key) => (
               <li key={key}>
-                <a
+                <MagneticNavLink
                   href={`#${key}`}
-                  className="nav-link-underline text-sm font-medium text-zinc-400 hover:text-accent transition-colors duration-200 tracking-wide"
+                  className="text-sm font-medium text-zinc-400 hover:text-accent transition-colors duration-200 tracking-wide"
                 >
                   {t(key)}
-                </a>
+                </MagneticNavLink>
               </li>
             ))}
           </ul>

@@ -79,6 +79,14 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        "float-slow": {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(2%, -3%) scale(1.02)" },
+        },
+        "float-slower": {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(-2%, 2%) scale(1.01)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -88,6 +96,8 @@ const config: Config = {
         "text-reveal": "text-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "glow-pulse": "glow-pulse 4s ease-in-out infinite",
         "float": "float 6s ease-in-out infinite",
+        "float-slow": "float-slow 12s ease-in-out infinite",
+        "float-slower": "float-slower 16s ease-in-out infinite",
       },
       boxShadow: {
         glass: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",

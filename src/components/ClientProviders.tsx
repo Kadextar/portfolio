@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { LoadingScreen } from "./LoadingScreen";
 import { PageTransition } from "./PageTransition";
+import { ScrollBackground } from "./ScrollBackground";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +18,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <ScrollBackground />
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loader" />
@@ -32,6 +34,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
           </motion.div>
         )}
       </AnimatePresence>
+      <div className="noise-overlay" aria-hidden />
     </>
   );
 }

@@ -22,7 +22,7 @@ export function Research() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="research" className="section-gradient-cool py-28 md:py-40 relative overflow-hidden">
+    <section id="research" className="py-28 md:py-40 relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,7 +63,7 @@ export function Research() {
                 },
               }}
             >
-              <Card className="glass-glow hover:border-white/12 transition-colors duration-300 group">
+              <Card className="glass-glow hover:border-white/12 transition-all duration-300 group hover:translate-y-[-2px]">
                 <CardContent className="p-8 md:p-10">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
                     <div className="flex-1 min-w-0">

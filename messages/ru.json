@@ -25,7 +25,11 @@
     "institution": "Самаркандский институт экономики и сервиса",
     "tagline": "Исследую инновации, цифровизацию и ИИ в гостеприимстве. Академия и практика: основатель Schedy · стажировка Wellfort Hotel · Kadextar.",
     "viewResearch": "Исследования",
-    "getInTouch": "Связаться"
+    "getInTouch": "Связаться",
+    "rotatingWord1": "Стратегия",
+    "rotatingWord2": "Гостеприимство",
+    "rotatingWord3": "Инновации",
+    "rotatingWord4": "Цифра"
   },
   "about": {
     "label": "Профиль",

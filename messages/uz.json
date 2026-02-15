@@ -25,7 +25,11 @@
     "institution": "Samarqand iqtisodiyot va xizmat instituti",
     "tagline": "Mehmondo'stlikda innovatsiya, raqamlashtirish va AI bo'yicha tadqiqot. Akademiya va amaliyot: Schedy asoschisi · Wellfort Hotel stajyor · Kadextar.",
     "viewResearch": "Tadqiqotlar",
-    "getInTouch": "Bog'lanish"
+    "getInTouch": "Bog'lanish",
+    "rotatingWord1": "Strategiya",
+    "rotatingWord2": "Mehmondo'stlik",
+    "rotatingWord3": "Innovatsiya",
+    "rotatingWord4": "Raqamli"
   },
   "about": {
     "label": "Profil",

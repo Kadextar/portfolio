@@ -87,7 +87,7 @@ export function DigitalInnovation() {
   return (
     <section
       id="digitalInnovation"
-      className="section-gradient-cool py-28 md:py-40 relative overflow-hidden"
+      className="py-28 md:py-40 relative overflow-hidden"
     >
       <div
         className="absolute inset-0 z-0 opacity-[0.02]"

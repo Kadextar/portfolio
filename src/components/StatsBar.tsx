@@ -42,7 +42,7 @@ export function StatsBar() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.6 }}
-      className="relative py-20 md:py-24 border-y border-white/5 bg-white/[0.01]"
+      className="relative py-20 md:py-24"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">

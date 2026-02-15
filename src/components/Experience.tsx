@@ -14,7 +14,7 @@ export function Experience() {
   const t = useTranslations("experience");
 
   return (
-    <section id="experience" className="section-gradient-accent py-28 md:py-40 relative overflow-hidden">
+    <section id="experience" className="py-28 md:py-40 relative overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
