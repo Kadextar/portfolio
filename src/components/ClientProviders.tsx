@@ -6,6 +6,8 @@ import { useLocale } from "next-intl";
 import { LoadingScreen } from "./LoadingScreen";
 import { PageTransition } from "./PageTransition";
 import { ScrollBackground } from "./ScrollBackground";
+import { SmoothScroll } from "./SmoothScroll";
+import { CustomCursor } from "./CustomCursor";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,8 +19,9 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <>
+    <SmoothScroll>
       <ScrollBackground />
+      <CustomCursor />
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loader" />
@@ -35,6 +38,6 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
       <div className="noise-overlay" aria-hidden />
-    </>
+    </SmoothScroll>
   );
 }
