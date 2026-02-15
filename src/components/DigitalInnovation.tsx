@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 function SchedyIcon({ className }: { className?: string }) {
   return (
@@ -85,12 +86,9 @@ export function DigitalInnovation() {
   const t = useTranslations("digitalInnovation");
 
   return (
-    <section
-      id="digitalInnovation"
-      className="py-28 md:py-40 relative overflow-hidden"
-    >
+    <CinematicSection id="digitalInnovation" depthScale={0.02} parallaxY={12}>
       <div
-        className="absolute inset-0 z-0 opacity-[0.02]"
+        className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
         style={{
           backgroundImage: `
             linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
@@ -165,6 +163,6 @@ export function DigitalInnovation() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

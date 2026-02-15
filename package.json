@@ -19,7 +19,8 @@
     "tailwind-merge": "^2.5.4",
     "@radix-ui/react-slot": "^1.1.0",
     "gsap": "^3.12.5",
-    "lenis": "^1.1.14"
+    "lenis": "^1.1.14",
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "@types/node": "^20",

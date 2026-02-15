@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 export function Contact() {
   const t = useTranslations("contact");
@@ -18,7 +19,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-28 md:py-40 relative">
+    <CinematicSection id="contact" depthScale={0.015} parallaxY={8}>
       <div className="max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -139,6 +140,6 @@ export function Contact() {
           </Card>
         </motion.div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

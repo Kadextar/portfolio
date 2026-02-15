@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const postImages = [
   "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2070&auto=format&fit=crop",
@@ -15,7 +16,7 @@ export function Blog() {
   const t = useTranslations("blog");
 
   return (
-    <section id="blog" className="py-28 md:py-40 relative">
+    <CinematicSection id="blog" depthScale={0.015} parallaxY={8}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -77,6 +78,6 @@ export function Blog() {
           ))}
         </div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

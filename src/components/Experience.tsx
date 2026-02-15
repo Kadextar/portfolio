@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const experiences = [
   { roleKey: "role1", orgKey: "org1", periodKey: "period1", descKey: "desc1" },
@@ -14,8 +15,8 @@ export function Experience() {
   const t = useTranslations("experience");
 
   return (
-    <section id="experience" className="py-28 md:py-40 relative overflow-hidden">
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+    <CinematicSection id="experience" depthScale={0.015} parallaxY={8}>
+      <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -65,6 +66,6 @@ export function Experience() {
           ))}
         </div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

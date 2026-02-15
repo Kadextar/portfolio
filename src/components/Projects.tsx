@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const projectTagKeys = [
   ["tagResearch", "tagDataAnalysis", "tagUX"],
@@ -21,7 +22,7 @@ export function Projects() {
   const t = useTranslations("projects");
 
   return (
-    <section id="projects" className="py-28 md:py-40 relative">
+    <CinematicSection id="projects" depthScale={0.015} parallaxY={8}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -82,6 +83,6 @@ export function Projects() {
           ))}
         </div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

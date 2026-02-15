@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { AnimatedCounter } from "@/components/effects/AnimatedCounter";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const statItems = [
   {
@@ -37,13 +38,7 @@ export function StatsBar() {
   const t = useTranslations("stats");
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.6 }}
-      className="relative py-20 md:py-24"
-    >
+    <CinematicSection className="py-20 md:py-24" depthScale={0.01} parallaxY={6}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
           {statItems.map((stat, i) => (
@@ -84,6 +79,6 @@ export function StatsBar() {
           ))}
         </div>
       </div>
-    </motion.section>
+    </CinematicSection>
   );
 }

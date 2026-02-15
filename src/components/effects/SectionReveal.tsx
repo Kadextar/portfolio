@@ -3,6 +3,7 @@
 import { useRef, useEffect, ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motionConfig, sectionTriggerDefaults } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,7 +14,14 @@ type SectionRevealProps = {
   y?: number;
 };
 
-export function SectionReveal({ children, className = "", delay = 0, y = 40 }: SectionRevealProps) {
+const { sectionReveal } = motionConfig;
+
+export function SectionReveal({
+  children,
+  className = "",
+  delay = 0,
+  y = sectionReveal.y,
+}: SectionRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,14 +35,14 @@ export function SectionReveal({ children, className = "", delay = 0, y = 40 }: S
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: sectionReveal.duration,
           delay,
-          ease: "power3.out",
+          ease: sectionReveal.ease,
           scrollTrigger: {
             trigger: el,
-            start: "top 85%",
-            end: "bottom 15%",
-            toggleActions: "play none none none",
+            start: sectionTriggerDefaults.start,
+            end: sectionTriggerDefaults.end,
+            toggleActions: sectionTriggerDefaults.toggleActions,
           },
         }
       );

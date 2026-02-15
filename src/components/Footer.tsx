@@ -8,8 +8,9 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/[0.06] py-12">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="relative py-16 overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-24 pointer-events-none bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" aria-hidden />
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-zinc-500 text-sm">
             © {currentYear} {t("copyright")}

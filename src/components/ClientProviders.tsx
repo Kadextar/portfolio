@@ -5,9 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { LoadingScreen } from "./LoadingScreen";
 import { PageTransition } from "./PageTransition";
-import { DynamicBackground } from "./DynamicBackground";
-import { SmoothScroll } from "./SmoothScroll";
+import { DynamicBackground, WebGLBackground } from "./background";
 import { CustomCursor } from "./CustomCursor";
+import { AmbientAudio } from "./AmbientAudio";
 import { LocaleTransitionContext } from "./LocaleTransitionContext";
 
 const localeTransitionTransition = {
@@ -38,9 +38,11 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <SmoothScroll>
+    <>
+      <WebGLBackground />
       <DynamicBackground />
       <CustomCursor />
+      <AmbientAudio />
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loader" />
@@ -66,6 +68,6 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
       <div className="noise-overlay" aria-hidden />
-    </SmoothScroll>
+    </>
   );
 }

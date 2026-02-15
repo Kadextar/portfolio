@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const categories = [
   {
@@ -28,7 +29,7 @@ export function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section id="skills" className="py-28 md:py-40 relative overflow-hidden">
+    <CinematicSection id="skills" depthScale={0.015} parallaxY={8}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,6 +116,6 @@ export function Skills() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

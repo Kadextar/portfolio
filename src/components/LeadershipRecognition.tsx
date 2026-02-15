@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const itemKeys = ["item1", "item2", "item3"] as const;
 
@@ -9,10 +10,7 @@ export function LeadershipRecognition() {
   const t = useTranslations("leadershipRecognition");
 
   return (
-    <section
-      id="leadershipRecognition"
-      className="py-28 md:py-40 relative overflow-hidden"
-    >
+    <CinematicSection id="leadershipRecognition" depthScale={0.015} parallaxY={8}>
       <div className="max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,7 +39,7 @@ export function LeadershipRecognition() {
                 delay: i * 0.06,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex gap-6 md:gap-10 py-8 md:py-10 border-b border-white/[0.04] last:border-b-0"
+              className="flex gap-6 md:gap-10 py-8 md:py-10"
             >
               <span className="flex-shrink-0 w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-accent text-sm font-medium">
                 {i + 1}
@@ -55,6 +53,6 @@ export function LeadershipRecognition() {
           ))}
         </ul>
       </div>
-    </section>
+    </CinematicSection>
   );
 }

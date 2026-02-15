@@ -9,6 +9,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { ClientProviders } from "@/components/ClientProviders";
 import { LocaleSync } from "@/components/LocaleSync";
 import { LocaleTransitionProvider } from "@/components/LocaleTransitionContext";
+import { MotionProvider } from "@/providers/MotionProvider";
 
 type Props = {
   children: React.ReactNode;
@@ -70,12 +71,14 @@ export default async function LocaleLayout({ children, params }: Props) {
     <NextIntlClientProvider messages={messages}>
       <LocaleSync locale={locale} />
       <LocaleTransitionProvider>
-        <Navbar />
-        <ClientProviders>
-          <main className="relative min-h-screen">{children}</main>
-        </ClientProviders>
-        <Footer />
-        <ScrollToTop />
+        <MotionProvider>
+          <Navbar />
+          <ClientProviders>
+            <main className="relative min-h-screen">{children}</main>
+          </ClientProviders>
+          <Footer />
+          <ScrollToTop />
+        </MotionProvider>
       </LocaleTransitionProvider>
     </NextIntlClientProvider>
   );

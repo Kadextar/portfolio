@@ -1,6 +1,8 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useTransform, motion } from "framer-motion";
+import type { MotionValue } from "framer-motion";
+import { useScrollController } from "@/lib/motion/scroll-context";
 
 const ZONE_COUNT = 6;
 const ZONE_STEP = 1 / ZONE_COUNT;
@@ -15,23 +17,23 @@ const ZONE_GRADIENTS = [
   "linear-gradient(180deg, #080808 0%, #090807 45%, #070707 100%)",
 ];
 
-function useZoneOpacity(zoneIndex: number, scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"]) {
+function useZoneOpacity(zoneIndex: number, scrollYProgress: MotionValue<number>) {
   const isFirst = zoneIndex === 0;
   const isLast = zoneIndex === ZONE_COUNT - 1;
   const inputRange = isFirst
-    ? [0, 0.04, 0.08, 0.12]
+    ? [0, 0.05, 0.1, 0.16]
     : isLast
-      ? [0.88, 0.92, 0.96, 1]
+      ? [0.84, 0.9, 0.95, 1]
       : (() => {
           const peak = zoneIndex * ZONE_STEP;
-          const spread = 0.1;
-          return [peak - spread, peak - 0.04, peak, peak + 0.04, peak + spread];
+          const spread = 0.14;
+          return [peak - spread, peak - 0.05, peak, peak + 0.05, peak + spread];
         })();
   const outputRange = isFirst
-    ? [1, 0.5, 0.2, 0]
+    ? [1, 0.6, 0.25, 0]
     : isLast
-      ? [0, 0.2, 0.5, 1]
-      : [0, 0.5, 1, 0.5, 0];
+      ? [0, 0.25, 0.6, 1]
+      : [0, 0.4, 1, 0.4, 0];
   return useTransform(scrollYProgress, inputRange, outputRange);
 }
 
@@ -44,7 +46,7 @@ const FLOATING_ORBS = [
 ];
 
 export function DynamicBackground() {
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScrollController();
 
   const opacity0 = useZoneOpacity(0, scrollYProgress);
   const opacity1 = useZoneOpacity(1, scrollYProgress);

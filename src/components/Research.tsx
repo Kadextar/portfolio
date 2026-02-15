@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { AbstractModal } from "@/components/AbstractModal";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const publicationKeys = [
   "pub1",
@@ -22,8 +23,8 @@ export function Research() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="research" className="py-28 md:py-40 relative overflow-hidden">
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+    <CinematicSection id="research" depthScale={0.02} parallaxY={10}>
+      <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -104,6 +105,6 @@ export function Research() {
           abstractLabel={t("abstract")}
         />
       ))}
-    </section>
+    </CinematicSection>
   );
 }

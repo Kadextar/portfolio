@@ -1,29 +1,21 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
+import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const focusKeys = ["focus1", "focus2", "focus3", "focus4", "focus5"] as const;
 const tagKeys = ["tag1", "tag2", "tag3"] as const;
 
 export function About() {
   const t = useTranslations("about");
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 0.25], [24, -12]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [0.85, 1]);
 
   return (
-    <section ref={ref} id="about" className="py-28 md:py-40 relative overflow-hidden">
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+    <CinematicSection id="about" depthScale={0.015} parallaxY={10}>
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div style={{ y, opacity }} className="space-y-8">
+          <div className="space-y-8">
             <motion.p
               initial={{ opacity: 0, x: -12 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -74,7 +66,7 @@ export function About() {
                 </span>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, x: 40 }}
@@ -100,6 +92,6 @@ export function About() {
           </motion.div>
         </div>
       </div>
-    </section>
+    </CinematicSection>
   );
 }
