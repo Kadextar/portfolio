@@ -111,7 +111,8 @@ export function WebGLBackground() {
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setClearColor(0x000000, 0);
-      containerRef.current.appendChild(renderer.domElement);
+      const container = containerRef.current;
+      if (container) container.appendChild(renderer.domElement);
 
       function tick() {
         if (!mounted || !material || !renderer) return;
