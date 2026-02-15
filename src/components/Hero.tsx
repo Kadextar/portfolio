@@ -29,6 +29,7 @@ export function Hero() {
 
   const [wordIndex, setWordIndex] = useState(0);
   const [timelineRan, setTimelineRan] = useState(false);
+  const [forceReveal, setForceReveal] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -44,80 +45,54 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.35], [1, 0.97]);
 
-  // GSAP entry timeline — mask-based reveal + staggered entry
+  // Fallback: if GSAP doesn’t reveal content (e.g. refs not ready), show after 1.8s
   useEffect(() => {
-    if (!containerRef.current || timelineRan) return;
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const t = setTimeout(() => setForceReveal(true), 1800);
+    return () => clearTimeout(t);
+  }, []);
 
-      if (subtitleRef.current) {
-        tl.fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.65 },
-          0
-        );
-      }
+  const gsapRevertRef = useRef<(() => void) | null>(null);
 
-      if (line1Ref.current) {
-        tl.fromTo(
-          line1Ref.current,
-          { yPercent: 100 },
-          { yPercent: 0, duration: 0.95, ease: "power3.out" },
-          0.12
-        );
-      }
-      if (line2Ref.current) {
-        tl.fromTo(
-          line2Ref.current,
-          { yPercent: 100 },
-          { yPercent: 0, duration: 0.95, ease: "power3.out" },
-          0.22
-        );
-      }
-      if (rotatingWrapRef.current) {
-        tl.fromTo(
-          rotatingWrapRef.current,
-          { opacity: 0, filter: "blur(14px)", y: 8 },
-          { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.85 },
-          0.5
-        );
-      }
-      if (institutionRef.current) {
-        tl.fromTo(
-          institutionRef.current,
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.55 },
-          0.9
-        );
-      }
-      if (taglineRef.current) {
-        tl.fromTo(
-          taglineRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.6 },
-          1.05
-        );
-      }
-      if (ctaRef.current) {
-        tl.fromTo(
-          ctaRef.current,
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-          1.2
-        );
-      }
-      if (scrollIndicatorRef.current) {
-        tl.fromTo(
-          scrollIndicatorRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.4 },
-          1.55
-        );
-      }
-    }, containerRef);
-    setTimelineRan(true);
-    return () => ctx.revert();
+  // GSAP entry timeline — mask-based reveal + staggered entry (defer so refs are set)
+  useEffect(() => {
+    if (timelineRan) return;
+    const id = setTimeout(() => {
+      if (!containerRef.current || timelineRan) return;
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        if (subtitleRef.current) {
+          tl.fromTo(subtitleRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.65 }, 0);
+        }
+        if (line1Ref.current) {
+          tl.fromTo(line1Ref.current, { yPercent: 100 }, { yPercent: 0, duration: 0.95, ease: "power3.out" }, 0.12);
+        }
+        if (line2Ref.current) {
+          tl.fromTo(line2Ref.current, { yPercent: 100 }, { yPercent: 0, duration: 0.95, ease: "power3.out" }, 0.22);
+        }
+        if (rotatingWrapRef.current) {
+          tl.fromTo(rotatingWrapRef.current, { opacity: 0, filter: "blur(14px)", y: 8 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.85 }, 0.5);
+        }
+        if (institutionRef.current) {
+          tl.fromTo(institutionRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.55 }, 0.9);
+        }
+        if (taglineRef.current) {
+          tl.fromTo(taglineRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.05);
+        }
+        if (ctaRef.current) {
+          tl.fromTo(ctaRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1.2);
+        }
+        if (scrollIndicatorRef.current) {
+          tl.fromTo(scrollIndicatorRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.55);
+        }
+      }, containerRef);
+      gsapRevertRef.current = () => ctx.revert();
+      setTimelineRan(true);
+    }, 50);
+    return () => {
+      clearTimeout(id);
+      gsapRevertRef.current?.();
+      gsapRevertRef.current = null;
+    };
   }, [timelineRan]);
 
   useEffect(() => {
@@ -189,7 +164,7 @@ export function Hero() {
       >
         <p
           ref={subtitleRef}
-          className="text-accent text-[11px] font-medium tracking-[0.32em] uppercase mb-8 sm:mb-10 opacity-0"
+          className={`text-accent text-[11px] font-medium tracking-[0.32em] uppercase mb-8 sm:mb-10 ${forceReveal ? "" : "opacity-0"}`}
         >
           {t("subtitle")}
         </p>
@@ -203,18 +178,18 @@ export function Hero() {
         >
           {/* Line 1: first name — mask reveal */}
           <div className="overflow-hidden leading-none">
-            <span ref={line1Ref} className="block will-change-transform" style={{ transform: "translateY(100%)" }}>
+            <span ref={line1Ref} className="block will-change-transform" style={{ transform: forceReveal ? "translateY(0)" : "translateY(100%)" }}>
               {t("titleFirst")}
             </span>
           </div>
           {/* Line 2: last name — mask reveal */}
           <div className="overflow-hidden leading-none">
-            <span ref={line2Ref} className="block text-accent will-change-transform" style={{ transform: "translateY(100%)" }}>
+            <span ref={line2Ref} className="block text-accent will-change-transform" style={{ transform: forceReveal ? "translateY(0)" : "translateY(100%)" }}>
               {t("titleLast")}
             </span>
           </div>
           {/* Rotating keyword — blur to sharp + subtle vertical shift */}
-          <div ref={rotatingWrapRef} className="mt-2 sm:mt-3 min-h-[1.1em] overflow-hidden opacity-0">
+          <div ref={rotatingWrapRef} className={`mt-2 sm:mt-3 min-h-[1.1em] overflow-hidden ${forceReveal ? "" : "opacity-0"}`}>
             <AnimatePresence mode="wait">
               <motion.span
                 key={wordIndex}
@@ -236,21 +211,21 @@ export function Hero() {
 
         <p
           ref={institutionRef}
-          className="mt-10 sm:mt-12 text-zinc-500 text-sm md:text-base font-medium tracking-wide opacity-0"
+          className={`mt-10 sm:mt-12 text-zinc-500 text-sm md:text-base font-medium tracking-wide ${forceReveal ? "" : "opacity-0"}`}
         >
           {t("institution")}
         </p>
 
         <p
           ref={taglineRef}
-          className="max-w-2xl mx-auto mt-6 text-zinc-400 text-[15px] md:text-base font-light leading-relaxed opacity-0"
+          className={`max-w-2xl mx-auto mt-6 text-zinc-400 text-[15px] md:text-base font-light leading-relaxed ${forceReveal ? "" : "opacity-0"}`}
         >
           {t("tagline")}
         </p>
 
         <div
           ref={ctaRef}
-          className="mt-24 sm:mt-28 flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0"
+          className={`mt-24 sm:mt-28 flex flex-col sm:flex-row gap-4 justify-center items-center ${forceReveal ? "" : "opacity-0"}`}
         >
           <MagneticButton
             as="a"
@@ -269,7 +244,7 @@ export function Hero() {
 
         <div
           ref={scrollIndicatorRef}
-          className="absolute bottom-14 left-1/2 -translate-x-1/2 opacity-0"
+          className={`absolute bottom-14 left-1/2 -translate-x-1/2 ${forceReveal ? "" : "opacity-0"}`}
         >
           <div className="w-6 h-10 rounded-full border border-white/10 flex justify-center pt-2">
             <div className="w-1 h-2 bg-accent/60 rounded-full" />
