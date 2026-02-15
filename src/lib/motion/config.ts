@@ -40,6 +40,29 @@ export const motionConfig = {
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   },
 
+  /** Subtle camera drift (mouse parallax on background only) */
+  cameraDrift: {
+    maxPercent: 1.2,
+    lerp: 0.06,
+  },
+
+  /** Cinematic page transition (route/locale change) */
+  pageTransition: {
+    duration: 1,
+    ease: [0.22, 1, 0.36, 1] as const,
+    scaleDown: 0.98,
+  },
+
+  /** Ambient audio ducking during page/locale transition */
+  audioTransition: {
+    /** Volume multiplier during transition (0–1), rest is full TARGET_VOLUME */
+    duckRatio: 0.4,
+    /** Fade down duration (s) when transition starts */
+    fadeDownDuration: 0.35,
+    /** Fade up duration (s) when transition completes */
+    fadeUpDuration: 0.5,
+  },
+
   /** Section reveal defaults (ScrollTrigger) */
   sectionReveal: {
     start: "top 85%",
@@ -47,6 +70,31 @@ export const motionConfig = {
     y: 40,
     duration: 1,
     ease: "power3.out" as const,
+  },
+
+  /** Custom cursor: magnetic pull, glow per section, precise feel */
+  cursor: {
+    /** Magnetic blend toward element center when over interactive (0 = off) */
+    magneticStrength: 0.28,
+    /** Margin (px) around interactive element for smooth pull-in */
+    magneticMargin: 12,
+    /** Spring: main cursor ring */
+    cursorSpring: { stiffness: 540, damping: 34 },
+    /** Spring: trail glow (softer) */
+    trailSpring: { stiffness: 100, damping: 24 },
+    /** Spring: inner dot (precise) */
+    innerSpring: { stiffness: 680, damping: 38 },
+    /** Glow intensity range [min, max] per section (first section = max, last = min) */
+    glowRange: [0.7, 1.2],
+  },
+
+  /** Scroll-based depth blur when sections leave viewport */
+  depthBlur: {
+    maxPx: 4,
+    /** Progress range for entering (blur 4→0): 0 to inEnd */
+    inEnd: 0.22,
+    /** Progress range for leaving (blur 0→4): outStart to 1 */
+    outStart: 0.78,
   },
 } as const;
 

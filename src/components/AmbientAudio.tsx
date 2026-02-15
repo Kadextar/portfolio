@@ -1,12 +1,36 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
+import { LocaleTransitionContext } from "./LocaleTransitionContext";
+import { motionConfig } from "@/lib/motion";
 
 const AMBIENT_SRC = "/audio/ambient.mp3";
-const TARGET_VOLUME = 0.15;
+const MAX_VOLUME = 0.18;
+const TARGET_VOLUME = Math.min(0.15, MAX_VOLUME);
 const FADE_IN_DURATION = 2;
 const FADE_OUT_DURATION = 1.5;
+const STORAGE_KEY = "ambient-audio-enabled";
+
+const { audioTransition } = motionConfig;
+const DUCK_VOLUME = TARGET_VOLUME * (audioTransition.duckRatio ?? 0.4);
+
+function getStoredPreference(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function setStoredPreference(on: boolean): void {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, on ? "true" : "false");
+  } catch {
+    // ignore
+  }
+}
 
 function SpeakerIcon({ on }: { on: boolean }) {
   return (
@@ -44,16 +68,20 @@ export function AmbientAudio() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const ctxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
-  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const transitionCtx = useContext(LocaleTransitionContext);
+  const isExiting = transitionCtx?.isExiting ?? false;
+  const isEntering = transitionCtx?.isEntering ?? false;
+  const wasEnteringRef = useRef(false);
 
   const fadeTo = useCallback((value: number, duration: number) => {
     const gain = gainRef.current;
     const ctx = ctxRef.current;
     if (!gain || !ctx) return;
+    const clamped = Math.min(MAX_VOLUME, Math.max(0, value));
     const now = ctx.currentTime;
     gain.gain.cancelScheduledValues(now);
-    gain.gain.linearRampToValueAtTime(value, now + duration);
+    gain.gain.linearRampToValueAtTime(clamped, now + duration);
   }, []);
 
   const stopAfterFade = useCallback((duration: number) => {
@@ -64,6 +92,66 @@ export function AmbientAudio() {
       audio.currentTime = 0;
     }, duration * 1000);
   }, []);
+
+  const playWithFadeIn = useCallback(() => {
+    const audio = audioRef.current;
+    const gain = gainRef.current;
+    const ctx = ctxRef.current;
+    if (!audio || !gain || !ctx) return;
+    if (ctx.state === "suspended") ctx.resume();
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    audio.play().then(() => {
+      setIsPlaying(true);
+      fadeTo(TARGET_VOLUME, FADE_IN_DURATION);
+    }).catch(() => {});
+  }, [fadeTo]);
+
+  const pauseWithFadeOut = useCallback(() => {
+    setIsPlaying(false);
+    fadeTo(0, FADE_OUT_DURATION);
+    stopAfterFade(FADE_OUT_DURATION);
+  }, [fadeTo, stopAfterFade]);
+
+  useEffect(() => {
+    if (!isPlaying || !gainRef.current || !ctxRef.current) return;
+
+    if (isExiting) {
+      fadeTo(DUCK_VOLUME, audioTransition.fadeDownDuration);
+    }
+  }, [isExiting, isPlaying, fadeTo]);
+
+  useEffect(() => {
+    if (!isPlaying || !gainRef.current || !ctxRef.current) return;
+
+    if (isEntering) {
+      wasEnteringRef.current = true;
+    } else if (wasEnteringRef.current) {
+      wasEnteringRef.current = false;
+      fadeTo(TARGET_VOLUME, audioTransition.fadeUpDuration);
+    }
+  }, [isEntering, isPlaying, fadeTo]);
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      const audio = audioRef.current;
+      const gain = gainRef.current;
+      const ctx = ctxRef.current;
+      if (document.hidden) {
+        if (audio && gain && ctx && !audio.paused) {
+          fadeTo(0, FADE_OUT_DURATION * 0.5);
+          setTimeout(() => {
+            audio.pause();
+            audio.currentTime = 0;
+            setIsPlaying(false);
+          }, (FADE_OUT_DURATION * 0.5) * 1000);
+        }
+      } else if (getStoredPreference() && hasInteracted && audio && gain && ctx) {
+        playWithFadeIn();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [hasInteracted, fadeTo, playWithFadeIn]);
 
   const handleToggle = useCallback(() => {
     if (isLoading) return;
@@ -80,12 +168,9 @@ export function AmbientAudio() {
       audioRef.current = audio;
 
       const source = ctx.createMediaElementSource(audio);
-      sourceRef.current = source;
-
       const gain = ctx.createGain();
       gain.gain.value = 0;
       gainRef.current = gain;
-
       source.connect(gain);
       gain.connect(ctx.destination);
 
@@ -94,6 +179,7 @@ export function AmbientAudio() {
         if (ctx.state === "suspended") ctx.resume();
         audio.play().then(() => {
           setIsPlaying(true);
+          setStoredPreference(true);
           fadeTo(TARGET_VOLUME, FADE_IN_DURATION);
         }).catch(() => setIsLoading(false));
         audio.removeEventListener("canplaythrough", onCanPlay);
@@ -117,20 +203,15 @@ export function AmbientAudio() {
     const gain = gainRef.current;
 
     if (isPlaying) {
-      setIsPlaying(false);
-      fadeTo(0, FADE_OUT_DURATION);
-      stopAfterFade(FADE_OUT_DURATION);
+      setStoredPreference(false);
+      pauseWithFadeOut();
     } else {
       if (audio && gain && ctxRef.current) {
-        if (ctxRef.current.state === "suspended") ctxRef.current.resume();
-        gain.gain.setValueAtTime(0, ctxRef.current.currentTime);
-        audio.play().then(() => {
-          setIsPlaying(true);
-          fadeTo(TARGET_VOLUME, FADE_IN_DURATION);
-        }).catch(() => {});
+        setStoredPreference(true);
+        playWithFadeIn();
       }
     }
-  }, [hasInteracted, isPlaying, isLoading, fadeTo, stopAfterFade]);
+  }, [hasInteracted, isPlaying, isLoading, fadeTo, pauseWithFadeOut, playWithFadeIn]);
 
   return (
     <motion.button

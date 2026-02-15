@@ -30,6 +30,7 @@ export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
   const [timelineRan, setTimelineRan] = useState(false);
   const [forceReveal, setForceReveal] = useState(false);
+  const [soundLabelVisible, setSoundLabelVisible] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -48,6 +49,11 @@ export function Hero() {
   // Fallback: if GSAP doesn’t reveal content (e.g. refs not ready), show after 1.8s
   useEffect(() => {
     const t = setTimeout(() => setForceReveal(true), 1800);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setSoundLabelVisible(true), 3000);
     return () => clearTimeout(t);
   }, []);
 
@@ -250,6 +256,13 @@ export function Hero() {
             <div className="w-1 h-2 bg-accent/60 rounded-full" />
           </div>
         </div>
+
+        <p
+          aria-hidden
+          className={`absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-medium tracking-[0.22em] uppercase text-white/25 transition-opacity duration-700 ${soundLabelVisible ? "opacity-100" : "opacity-0"}`}
+        >
+          {t("soundExperience")}
+        </p>
       </motion.div>
     </section>
   );

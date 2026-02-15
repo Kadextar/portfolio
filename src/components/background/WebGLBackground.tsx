@@ -57,7 +57,7 @@ const FRAGMENT = `
   }
 `;
 
-export function WebGLBackground() {
+export function WebGLBackground({ absolute = false }: { absolute?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number>(0);
 
@@ -156,10 +156,14 @@ export function WebGLBackground() {
     };
   }, []);
 
+  const containerClass = absolute
+    ? "pointer-events-none absolute inset-0 overflow-hidden"
+    : "pointer-events-none fixed inset-0 -z-20 overflow-hidden";
+
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none fixed inset-0 -z-20 overflow-hidden"
+      className={containerClass}
       data-layer="webgl-background"
       aria-hidden
     />

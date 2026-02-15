@@ -45,7 +45,7 @@ const FLOATING_ORBS = [
   { top: "20%", left: "70%", width: "min(25vw,220px)", blur: 80, color: "rgba(255,255,255,0.015)", anim: "float-drift", duration: "22s" },
 ];
 
-export function DynamicBackground() {
+export function DynamicBackground({ absolute = false }: { absolute?: boolean }) {
   const { scrollYProgress } = useScrollController();
 
   const opacity0 = useZoneOpacity(0, scrollYProgress);
@@ -56,8 +56,12 @@ export function DynamicBackground() {
   const opacity5 = useZoneOpacity(5, scrollYProgress);
   const opacities = [opacity0, opacity1, opacity2, opacity3, opacity4, opacity5];
 
+  const containerClass = absolute
+    ? "absolute inset-0 overflow-hidden"
+    : "fixed inset-0 -z-10 overflow-hidden";
+
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
+    <div className={containerClass}>
       {/* Base dark layer — ensures no flash */}
       <div className="absolute inset-0 bg-[#060606]" />
 

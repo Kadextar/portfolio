@@ -1,7 +1,17 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motionConfig } from "@/lib/motion";
+
+gsap.registerPlugin(ScrollTrigger);
+
+function smoothstep(a: number, b: number, x: number): number {
+  const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+}
 
 type CinematicSectionProps = {
   children: ReactNode;
@@ -13,9 +23,11 @@ type CinematicSectionProps = {
   parallaxY?: number;
 };
 
+const { depthBlur } = motionConfig;
+
 /**
- * Wraps content in a section with scroll-driven opacity morph, optional depth (scale)
- * and parallax. No borders or visual separation — for continuous flow.
+ * Wraps content in a section with scroll-driven opacity morph, optional depth (scale),
+ * parallax, and depth blur (sections blur slightly when leaving viewport).
  */
 export function CinematicSection({
   children,
@@ -48,6 +60,33 @@ export function CinematicSection({
     [0, 0.3, 0.5, 0.7, 1],
     [parallaxY, 0, 0, 0, -parallaxY * 0.5]
   );
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate: (self) => {
+        const p = self.progress;
+        const { maxPx, inEnd, outStart } = depthBlur;
+        const blur =
+          p < inEnd
+            ? maxPx * (1 - smoothstep(0, inEnd, p))
+            : p > outStart
+              ? maxPx * smoothstep(outStart, 1, p)
+              : 0;
+        el.style.filter = blur > 0 ? `blur(${blur}px)` : "none";
+      },
+    });
+
+    return () => {
+      st.kill();
+      el.style.filter = "";
+    };
+  }, []);
 
   return (
     <motion.section
