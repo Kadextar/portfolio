@@ -18,19 +18,21 @@ const ZONE_GRADIENTS = [
 function useZoneOpacity(zoneIndex: number, scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"]) {
   const isFirst = zoneIndex === 0;
   const isLast = zoneIndex === ZONE_COUNT - 1;
-  if (isFirst) {
-    return useTransform(scrollYProgress, [0, 0.04, 0.08, 0.12], [1, 0.5, 0.2, 0]);
-  }
-  if (isLast) {
-    return useTransform(scrollYProgress, [0.88, 0.92, 0.96, 1], [0, 0.2, 0.5, 1]);
-  }
-  const peak = zoneIndex * ZONE_STEP;
-  const spread = 0.1;
-  return useTransform(
-    scrollYProgress,
-    [peak - spread, peak - 0.04, peak, peak + 0.04, peak + spread],
-    [0, 0.5, 1, 0.5, 0]
-  );
+  const inputRange = isFirst
+    ? [0, 0.04, 0.08, 0.12]
+    : isLast
+      ? [0.88, 0.92, 0.96, 1]
+      : (() => {
+          const peak = zoneIndex * ZONE_STEP;
+          const spread = 0.1;
+          return [peak - spread, peak - 0.04, peak, peak + 0.04, peak + spread];
+        })();
+  const outputRange = isFirst
+    ? [1, 0.5, 0.2, 0]
+    : isLast
+      ? [0, 0.2, 0.5, 1]
+      : [0, 0.5, 1, 0.5, 0];
+  return useTransform(scrollYProgress, inputRange, outputRange);
 }
 
 const FLOATING_ORBS = [
@@ -44,7 +46,13 @@ const FLOATING_ORBS = [
 export function DynamicBackground() {
   const { scrollYProgress } = useScroll();
 
-  const opacities = Array.from({ length: ZONE_COUNT }, (_, i) => useZoneOpacity(i, scrollYProgress));
+  const opacity0 = useZoneOpacity(0, scrollYProgress);
+  const opacity1 = useZoneOpacity(1, scrollYProgress);
+  const opacity2 = useZoneOpacity(2, scrollYProgress);
+  const opacity3 = useZoneOpacity(3, scrollYProgress);
+  const opacity4 = useZoneOpacity(4, scrollYProgress);
+  const opacity5 = useZoneOpacity(5, scrollYProgress);
+  const opacities = [opacity0, opacity1, opacity2, opacity3, opacity4, opacity5];
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
