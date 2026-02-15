@@ -7,6 +7,7 @@ import type { Locale } from "@/i18n/routing";
 const SCROLL_KEY = "locale-transition-scroll";
 
 type ContextValue = {
+  hasProvider: boolean;
   isExiting: boolean;
   isEntering: boolean;
   startLocaleTransition: (locale: Locale) => void;
@@ -15,6 +16,7 @@ type ContextValue = {
 };
 
 const defaultValue: ContextValue = {
+  hasProvider: false,
   isExiting: false,
   isEntering: false,
   startLocaleTransition: () => {},
@@ -61,6 +63,7 @@ export function LocaleTransitionProvider({ children }: { children: ReactNode }) 
   }, []);
 
   const value: ContextValue = {
+    hasProvider: true,
     isExiting,
     isEntering: nextPageShouldEnter,
     startLocaleTransition,

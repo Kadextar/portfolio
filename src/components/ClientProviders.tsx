@@ -25,7 +25,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   const isEntering = ctx?.isEntering ?? false;
   const onExitComplete = ctx?.onExitComplete;
   const onEnterComplete = ctx?.onEnterComplete;
-  const hasLocaleTransition = Boolean(onExitComplete && onEnterComplete);
+  const hasLocaleTransition = ctx?.hasProvider ?? false;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1200);
