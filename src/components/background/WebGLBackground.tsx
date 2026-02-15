@@ -65,8 +65,8 @@ export function WebGLBackground() {
     if (typeof window === "undefined" || !containerRef.current) return;
 
     let mounted = true;
-    let renderer: import("three").WebGLRenderer | null = null;
-    let material: import("three").ShaderMaterial | null = null;
+    let renderer: any = null;
+    let material: any = null;
     const startTime = performance.now() * 0.001;
 
     const init = async () => {
