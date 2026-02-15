@@ -1,26 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { useContext } from "react";
 import { useLocale } from "next-intl";
 import { motion } from "framer-motion";
 import { localeNames, type Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { LocaleTransitionContext } from "./LocaleTransitionContext";
 
 const locales: Locale[] = ["en", "ru", "uz"];
 
 export function LanguageSwitcher() {
-  const pathname = usePathname();
-  const router = useRouter();
   const effectiveLocale = useLocale() as Locale;
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const { startLocaleTransition, isExiting } = useContext(LocaleTransitionContext);
 
   const switchLocale = (locale: Locale) => {
     if (locale === effectiveLocale) return;
-    setIsTransitioning(true);
-    router.replace(pathname ?? "/", { locale });
-    const t = setTimeout(() => setIsTransitioning(false), 400);
-    return () => clearTimeout(t);
+    startLocaleTransition(locale);
   };
 
   return (
@@ -30,7 +25,7 @@ export function LanguageSwitcher() {
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "flex items-center gap-0.5 rounded-full glass px-1 py-0.5 transition-opacity duration-300",
-        isTransitioning && "opacity-70"
+        isExiting && "opacity-70"
       )}
       role="group"
       aria-label="Switch language"

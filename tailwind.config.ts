@@ -87,6 +87,11 @@ const config: Config = {
           "0%, 100%": { transform: "translate(0, 0) scale(1)" },
           "50%": { transform: "translate(-2%, 2%) scale(1.01)" },
         },
+        "float-drift": {
+          "0%, 100%": { transform: "translate(0, 0)" },
+          "33%": { transform: "translate(1.5%, -1.5%)" },
+          "66%": { transform: "translate(-1%, 2%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -98,6 +103,7 @@ const config: Config = {
         "float": "float 6s ease-in-out infinite",
         "float-slow": "float-slow 12s ease-in-out infinite",
         "float-slower": "float-slower 16s ease-in-out infinite",
+        "float-drift": "float-drift 22s ease-in-out infinite",
       },
       boxShadow: {
         glass: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",

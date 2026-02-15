@@ -43,6 +43,14 @@ body {
   overflow-x: hidden;
 }
 
+/* Custom cursor: hide default pointer on interactive elements when active */
+.custom-cursor-active a,
+.custom-cursor-active button,
+.custom-cursor-active [role="button"],
+.custom-cursor-active [data-cursor-hover] {
+  cursor: none;
+}
+
 /* Cinematic: noise overlay */
 .noise-overlay {
   position: fixed;

@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ClientProviders } from "@/components/ClientProviders";
 import { LocaleSync } from "@/components/LocaleSync";
+import { LocaleTransitionProvider } from "@/components/LocaleTransitionContext";
 
 type Props = {
   children: React.ReactNode;
@@ -68,12 +69,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       <LocaleSync locale={locale} />
-      <Navbar />
-      <ClientProviders>
-        <main className="relative min-h-screen">{children}</main>
-      </ClientProviders>
-      <Footer />
-      <ScrollToTop />
+      <LocaleTransitionProvider>
+        <Navbar />
+        <ClientProviders>
+          <main className="relative min-h-screen">{children}</main>
+        </ClientProviders>
+        <Footer />
+        <ScrollToTop />
+      </LocaleTransitionProvider>
     </NextIntlClientProvider>
   );
 }
