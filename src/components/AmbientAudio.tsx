@@ -62,7 +62,13 @@ function SpeakerIcon({ on }: { on: boolean }) {
   );
 }
 
-export function AmbientAudio() {
+type AmbientAudioProps = {
+  /** When true, render inline (no fixed position) for use inside Navbar */
+  embedded?: boolean;
+  className?: string;
+};
+
+export function AmbientAudio({ embedded = false, className }: AmbientAudioProps = {}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -213,19 +219,27 @@ export function AmbientAudio() {
     }
   }, [hasInteracted, isPlaying, isLoading, fadeTo, pauseWithFadeOut, playWithFadeIn]);
 
+  const baseClass =
+    "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-zinc-300 backdrop-blur-sm transition-colors hover:bg-white/[0.08] hover:border-white/15 hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] disabled:opacity-50 shrink-0";
+  const positionClass = embedded ? "" : "fixed top-6 right-14 md:right-6 z-[9997]";
+
   return (
     <motion.button
       type="button"
       onClick={handleToggle}
-      initial={{ opacity: 0, x: 8 }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={embedded ? false : { opacity: 0, x: 8 }}
+      animate={embedded ? false : { opacity: 1, x: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-6 right-6 z-[9997] flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-accent backdrop-blur-sm transition-colors hover:bg-white/[0.08] hover:border-white/15 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#0a0a0a] disabled:opacity-50"
-      style={{
-        boxShadow: isPlaying
-          ? "0 0 20px 4px rgba(201, 162, 39, 0.2), 0 0 40px 8px rgba(201, 162, 39, 0.06)"
-          : "0 0 12px 2px rgba(201, 162, 39, 0.08)",
-      }}
+      className={[positionClass, baseClass, className].filter(Boolean).join(" ")}
+      style={
+        embedded
+          ? undefined
+          : {
+              boxShadow: isPlaying
+                ? "0 0 20px 4px rgba(201, 162, 39, 0.2), 0 0 40px 8px rgba(201, 162, 39, 0.06)"
+                : "0 0 12px 2px rgba(201, 162, 39, 0.08)",
+            }
+      }
       disabled={isLoading}
       aria-label={isPlaying ? "Mute ambient sound" : "Play ambient sound"}
     >

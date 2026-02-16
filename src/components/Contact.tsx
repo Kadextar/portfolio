@@ -10,17 +10,34 @@ import { CinematicSection } from "@/components/effects/CinematicSection";
 
 export function Contact() {
   const t = useTranslations("contact");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const tInfo = useTranslations("info");
+  const [status, setStatus] = useState<"idle" | "opening" | "sent">("idle");
+  const RECIPIENT = "kadextar@gmail.com";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("sending");
-    setTimeout(() => setStatus("sent"), 1500);
+    setStatus("opening");
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement)?.value ?? "";
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value ?? "";
+    const subject = (form.elements.namedItem("subject") as HTMLInputElement)?.value ?? "";
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value ?? "";
+    const body = [
+      name && `Name: ${name}`,
+      email && `Email: ${email}`,
+      "",
+      message,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    const mailto = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject || t("placeholderSubject"))}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+    setStatus("sent");
   };
 
   return (
     <CinematicSection id="contact" depthScale={0.015} parallaxY={8}>
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-6 pt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -43,7 +60,12 @@ export function Contact() {
         >
           <Card className="glass-glow border-white/10 hover:border-white/15 transition-colors duration-300">
             <CardContent className="p-8 md:p-12">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6"
+                aria-label={t("title")}
+                noValidate
+              >
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -106,38 +128,61 @@ export function Contact() {
                 </div>
                 <Button
                   type="submit"
-                  disabled={status === "sending"}
+                  disabled={status === "opening"}
                   size="lg"
                   className="btn-glow transition-shadow duration-300"
+                  aria-busy={status === "opening"}
+                  aria-live="polite"
                 >
                   {status === "idle" && t("send")}
-                  {status === "sending" && t("sending")}
+                  {status === "opening" && t("sending")}
                   {status === "sent" && t("sent")}
                 </Button>
               </form>
-
-              <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-8 justify-center">
-                <a
-                  href="mailto:contact@example.com"
-                  className="text-zinc-400 hover:text-accent transition-colors text-sm"
-                >
-                  contact@example.com
-                </a>
-                <a
-                  href="#"
-                  className="text-zinc-400 hover:text-accent transition-colors text-sm"
-                >
-                  {t("linkedin")}
-                </a>
-                <a
-                  href="#"
-                  className="text-zinc-400 hover:text-accent transition-colors text-sm"
-                >
-                  {t("researchgate")}
-                </a>
-              </div>
             </CardContent>
           </Card>
+
+          <p className="text-zinc-500 text-xs font-medium tracking-[0.2em] uppercase mb-4 mt-12">
+            {tInfo("contactTitle")}
+          </p>
+          <div className="space-y-3">
+            <a
+              href={`mailto:${tInfo("email")}`}
+              className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
+              aria-label={tInfo("labelEmail")}
+            >
+              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelEmail")}</span>
+              <span className="text-zinc-300 text-sm truncate">{tInfo("email")}</span>
+            </a>
+            <a
+              href={`tel:${tInfo("phone").replace(/\s/g, "")}`}
+              className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
+              aria-label={tInfo("labelPhone")}
+            >
+              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelPhone")}</span>
+              <span className="text-zinc-300 text-sm">{tInfo("phone")}</span>
+            </a>
+            <a
+              href={`https://t.me/${tInfo("telegram").replace("@", "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
+              aria-label={tInfo("labelTelegram")}
+            >
+              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelTelegram")}</span>
+              <span className="text-zinc-300 text-sm">{tInfo("telegram")}</span>
+            </a>
+            <a
+              href={`https://${tInfo("linkedin")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
+              aria-label={tInfo("labelLinkedIn")}
+            >
+              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelLinkedIn")}</span>
+              <span className="text-zinc-300 text-sm truncate">{tInfo("linkedin")}</span>
+            </a>
+          </div>
         </motion.div>
       </div>
     </CinematicSection>

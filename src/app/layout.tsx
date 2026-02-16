@@ -1,6 +1,7 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
+import { Analytics } from "@/components/Analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,6 +16,12 @@ const playfair = Playfair_Display({
 });
 
 const LOCALES = ["en", "ru", "uz"] as const;
+
+export const metadata = {
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
+};
 
 export default async function RootLayout({
   children,
@@ -32,6 +39,7 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[#050506] text-zinc-100 min-h-screen`}
       >
+        <Analytics />
         {children}
       </body>
     </html>

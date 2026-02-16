@@ -8,7 +8,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative py-16 overflow-hidden">
+    <footer className="relative py-16 overflow-hidden print:hidden">
       <div className="absolute inset-x-0 top-0 h-24 pointer-events-none bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" aria-hidden />
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -29,7 +29,7 @@ export function Footer() {
               {t("research")}
             </I18nLink>
             <I18nLink
-              href="#contact"
+              href="/contact"
               className="text-zinc-500 hover:text-accent text-sm transition-colors"
             >
               {t("contact")}

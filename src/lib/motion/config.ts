@@ -78,12 +78,12 @@ export const motionConfig = {
     magneticStrength: 0.28,
     /** Margin (px) around interactive element for smooth pull-in */
     magneticMargin: 12,
-    /** Spring: main cursor ring */
-    cursorSpring: { stiffness: 540, damping: 34 },
+    /** Spring: main cursor ring — snappier for faster follow */
+    cursorSpring: { stiffness: 780, damping: 38 },
     /** Spring: trail glow (softer) */
-    trailSpring: { stiffness: 100, damping: 24 },
-    /** Spring: inner dot (precise) */
-    innerSpring: { stiffness: 680, damping: 38 },
+    trailSpring: { stiffness: 140, damping: 26 },
+    /** Spring: inner dot (precise, fast) */
+    innerSpring: { stiffness: 920, damping: 42 },
     /** Glow intensity range [min, max] per section (first section = max, last = min) */
     glowRange: [0.7, 1.2],
   },

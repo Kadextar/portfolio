@@ -3,15 +3,14 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { MagneticButton } from "@/components/effects/MagneticButton";
+import { Link } from "@/i18n/navigation";
 import { gsap } from "gsap";
 import { motionConfig } from "@/lib/motion";
 
 const ROTATING_KEYS = ["rotatingWord1", "rotatingWord2", "rotatingWord3", "rotatingWord4"] as const;
 const ROTATE_INTERVAL_MS = 3400;
 
-/** Monumental headline — single clamp for scale, tight leading */
-const HEADLINE_CLAMP = "clamp(3.25rem, 14vw + 2rem, 11rem)";
+/** На мобиле — мелче, чтобы длинное «Гостеприимство» в одну строку; на десктопе — крупнее */
 const HEADLINE_LEADING = 0.88;
 
 export function Hero() {
@@ -19,10 +18,7 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const line1Ref = useRef<HTMLSpanElement>(null);
-  const line2Ref = useRef<HTMLSpanElement>(null);
   const rotatingWrapRef = useRef<HTMLDivElement>(null);
-  const institutionRef = useRef<HTMLParagraphElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
@@ -30,7 +26,6 @@ export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
   const [timelineRan, setTimelineRan] = useState(false);
   const [forceReveal, setForceReveal] = useState(false);
-  const [soundLabelVisible, setSoundLabelVisible] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -52,11 +47,6 @@ export function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    const t = setTimeout(() => setSoundLabelVisible(true), 3000);
-    return () => clearTimeout(t);
-  }, []);
-
   const gsapRevertRef = useRef<(() => void) | null>(null);
 
   // GSAP entry timeline — mask-based reveal + staggered entry (defer so refs are set)
@@ -69,17 +59,8 @@ export function Hero() {
         if (subtitleRef.current) {
           tl.fromTo(subtitleRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.65 }, 0);
         }
-        if (line1Ref.current) {
-          tl.fromTo(line1Ref.current, { yPercent: 100 }, { yPercent: 0, duration: 0.95, ease: "power3.out" }, 0.12);
-        }
-        if (line2Ref.current) {
-          tl.fromTo(line2Ref.current, { yPercent: 100 }, { yPercent: 0, duration: 0.95, ease: "power3.out" }, 0.22);
-        }
         if (rotatingWrapRef.current) {
-          tl.fromTo(rotatingWrapRef.current, { opacity: 0, filter: "blur(14px)", y: 8 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.85 }, 0.5);
-        }
-        if (institutionRef.current) {
-          tl.fromTo(institutionRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.55 }, 0.9);
+          tl.fromTo(rotatingWrapRef.current, { opacity: 0, filter: "blur(14px)", y: 8 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.95, ease: "power3.out" }, 0.2);
         }
         if (taglineRef.current) {
           tl.fromTo(taglineRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.05);
@@ -135,10 +116,10 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-x-hidden px-4 sm:px-6"
     >
       {/* Ambient orbs */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[12%] left-[8%] w-[min(55vw,420px)] h-[min(55vw,420px)] rounded-full bg-accent/[0.07] blur-[110px] animate-float-slow" />
         <div className="absolute bottom-[18%] right-[6%] w-[min(48vw,380px)] h-[min(48vw,380px)] rounded-full bg-accent/[0.05] blur-[100px] animate-float-slower" />
         <div className="absolute top-[48%] left-[50%] w-[min(38vw,300px)] h-[min(38vw,300px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.03] blur-[85px]" />
@@ -166,86 +147,56 @@ export function Hero() {
           opacity,
           scale,
         }}
-        className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 text-center"
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12 text-center min-w-0"
       >
         <p
           ref={subtitleRef}
-          className={`text-accent text-[11px] font-medium tracking-[0.32em] uppercase mb-8 sm:mb-10 ${forceReveal ? "" : "opacity-0"}`}
+          className={`text-accent text-[10px] sm:text-xs font-medium tracking-[0.28em] uppercase mb-6 sm:mb-8 break-words ${forceReveal ? "" : "opacity-0"}`}
         >
           {t("subtitle")}
         </p>
 
+        {/* Main headline: одно слово в одну строку (на телефоне — мелче, чтобы не переносилось) */}
         <div
-          className="font-display font-normal tracking-tight text-white overflow-hidden"
-          style={{
-            fontSize: HEADLINE_CLAMP,
-            lineHeight: HEADLINE_LEADING,
-          }}
+          ref={rotatingWrapRef}
+          className={`font-display font-normal tracking-tight min-h-[1.2em] overflow-visible text-[3.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[7rem] ${forceReveal ? "" : "opacity-0"}`}
+          style={{ lineHeight: HEADLINE_LEADING }}
         >
-          {/* Line 1: first name — mask reveal */}
-          <div className="overflow-hidden leading-none">
-            <span ref={line1Ref} className="block will-change-transform" style={{ transform: forceReveal ? "translateY(0)" : "translateY(100%)" }}>
-              {t("titleFirst")}
-            </span>
-          </div>
-          {/* Line 2: last name — mask reveal */}
-          <div className="overflow-hidden leading-none">
-            <span ref={line2Ref} className="block text-accent will-change-transform" style={{ transform: forceReveal ? "translateY(0)" : "translateY(100%)" }}>
-              {t("titleLast")}
-            </span>
-          </div>
-          {/* Rotating keyword — blur to sharp + subtle vertical shift */}
-          <div ref={rotatingWrapRef} className={`mt-2 sm:mt-3 min-h-[1.1em] overflow-hidden ${forceReveal ? "" : "opacity-0"}`}>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={wordIndex}
-                initial={{ opacity: 0, filter: "blur(12px)", y: 6 }}
-                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                exit={{ opacity: 0, filter: "blur(10px)", y: -4 }}
-                transition={{
-                  duration: 0.65,
-                  ease: motionConfig.ease.default,
-                  exit: { duration: 0.35 },
-                }}
-                className="block text-accent/95 italic font-light"
-              >
-                {t(ROTATING_KEYS[wordIndex])}
-              </motion.span>
-            </AnimatePresence>
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={wordIndex}
+              initial={{ opacity: 0, filter: "blur(12px)", y: 6 }}
+              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+              exit={{ opacity: 0, filter: "blur(10px)", y: -4 }}
+              transition={{
+                duration: 0.65,
+                ease: motionConfig.ease.default,
+                exit: { duration: 0.35 },
+              }}
+              className="block text-accent/95 italic font-light whitespace-nowrap"
+            >
+              {t(ROTATING_KEYS[wordIndex])}
+            </motion.span>
+          </AnimatePresence>
         </div>
 
         <p
-          ref={institutionRef}
-          className={`mt-10 sm:mt-12 text-zinc-500 text-sm md:text-base font-medium tracking-wide ${forceReveal ? "" : "opacity-0"}`}
-        >
-          {t("institution")}
-        </p>
-
-        <p
           ref={taglineRef}
-          className={`max-w-2xl mx-auto mt-6 text-zinc-400 text-[15px] md:text-base font-light leading-relaxed ${forceReveal ? "" : "opacity-0"}`}
+          className={`max-w-2xl mx-auto mt-10 sm:mt-12 text-zinc-400 text-[15px] md:text-base font-light leading-relaxed break-words px-1 ${forceReveal ? "" : "opacity-0"}`}
         >
           {t("tagline")}
         </p>
 
         <div
           ref={ctaRef}
-          className={`mt-24 sm:mt-28 flex flex-col sm:flex-row gap-4 justify-center items-center ${forceReveal ? "" : "opacity-0"}`}
+          className={`mt-24 sm:mt-28 flex justify-center items-center ${forceReveal ? "" : "opacity-0"}`}
         >
-          <MagneticButton
-            as="a"
-            href="#research"
+          <Link
+            href="/contact"
             className="inline-flex h-12 min-w-[140px] items-center justify-center rounded-md bg-accent px-10 text-sm font-medium text-accent-foreground transition-colors duration-300 hover:bg-accent-light"
           >
-            {t("viewResearch")}
-          </MagneticButton>
-          <a
-            href="#contact"
-            className="inline-flex h-12 min-w-[140px] items-center justify-center rounded-md border border-white/15 bg-white/5 px-10 text-sm font-medium text-white transition-colors duration-300 hover:border-white/25 hover:bg-white/10"
-          >
             {t("getInTouch")}
-          </a>
+          </Link>
         </div>
 
         <div
@@ -256,13 +207,6 @@ export function Hero() {
             <div className="w-1 h-2 bg-accent/60 rounded-full" />
           </div>
         </div>
-
-        <p
-          aria-hidden
-          className={`absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-medium tracking-[0.22em] uppercase text-white/25 transition-opacity duration-700 ${soundLabelVisible ? "opacity-100" : "opacity-0"}`}
-        >
-          {t("soundExperience")}
-        </p>
       </motion.div>
     </section>
   );

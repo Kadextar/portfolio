@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Card, CardContent } from "@/components/ui/card";
-import { AbstractModal } from "@/components/AbstractModal";
 import { CinematicSection } from "@/components/effects/CinematicSection";
+import { AbstractModal } from "@/components/AbstractModal";
 
 const publicationKeys = [
   "pub1",
@@ -18,18 +17,36 @@ const publicationKeys = [
   "pub8",
 ] as const;
 
+function parseDateKey(dateStr: string): number {
+  const parts = dateStr.trim().split(/[.\-/]/).map(Number);
+  if (parts.length >= 3) {
+    const [d, m, y] = parts;
+    return new Date(y, (m || 1) - 1, d || 1).getTime();
+  }
+  return 0;
+}
+
 export function Research() {
   const t = useTranslations("research");
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [modalIndex, setModalIndex] = useState<number | null>(null);
+
+  const sortedKeys = useMemo(() => {
+    return [...publicationKeys].sort((a, b) => {
+      const dateA = parseDateKey(t(`${a}Date`));
+      const dateB = parseDateKey(t(`${b}Date`));
+      return dateB - dateA;
+    });
+  }, [t]);
 
   return (
     <CinematicSection id="research" depthScale={0.02} parallaxY={10}>
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           <p className="text-accent text-xs font-medium tracking-[0.28em] uppercase mb-4">
             {t("label")}
@@ -37,67 +54,89 @@ export function Research() {
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
+          <p className="mt-4 text-zinc-500 max-w-xl mx-auto text-sm">
+            {t("subtitle")}
+          </p>
         </motion.div>
 
-        <motion.div
-          className="space-y-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: { staggerChildren: 0.08, delayChildren: 0.05 },
-            },
-          }}
+        <div
+          className="border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02]"
+          role="list"
         >
-          {publicationKeys.map((key, i) => (
-            <motion.div
-              key={key}
-              variants={{
-                hidden: { opacity: 0, y: 24 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-                },
-              }}
-            >
-              <Card className="glass-glow hover:border-white/12 transition-all duration-300 group hover:translate-y-[-2px]">
-                <CardContent className="p-8 md:p-10">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-accent text-xs font-medium tracking-wider uppercase">
-                        {t(`${key}Date`)}
-                      </p>
-                      <h3 className="mt-2 text-lg md:text-xl font-medium text-white group-hover:text-accent transition-colors duration-200 leading-snug">
-                        {t(`${key}Title`)}
-                      </h3>
-                      <p className="mt-3 text-zinc-500 text-sm line-clamp-2">
-                        {t(`${key}Abstract`)}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setOpenIndex(i)}
-                      className="flex-shrink-0 px-5 py-2.5 rounded-md border border-white/15 bg-white/5 text-sm font-medium text-zinc-400 hover:border-accent/30 hover:bg-accent/10 hover:text-accent transition-colors duration-200"
+          {sortedKeys.map((key, i) => {
+            const isExpanded = expandedIndex === i;
+            return (
+              <motion.div
+                key={key}
+                initial={false}
+                className="border-b border-white/10 last:border-b-0"
+                role="listitem"
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpandedIndex(isExpanded ? null : i)}
+                  className="w-full flex items-center gap-4 md:gap-6 px-5 md:px-8 py-5 text-left hover:bg-white/[0.03] transition-colors duration-200 group"
+                  aria-expanded={isExpanded}
+                >
+                  <span className="flex-shrink-0 text-zinc-500 text-xs font-medium tabular-nums w-20">
+                    {t(`${key}Date`)}
+                  </span>
+                  <span className="flex-1 min-w-0 font-medium text-white text-sm md:text-base leading-snug group-hover:text-accent/90 transition-colors line-clamp-2">
+                    {t(`${key}Title`)}
+                  </span>
+                  <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 text-zinc-500 group-hover:border-white/20 group-hover:text-accent/80 transition-colors">
+                    <motion.span
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
                     >
-                      {t("viewAbstract")}
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </motion.span>
+                  </span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 md:px-8 pb-6 pt-0">
+                        <div className="pl-20 md:pl-24 border-l-2 border-white/10">
+                          <p className="pl-5 md:pl-6 text-zinc-400 text-sm leading-relaxed">
+                            {t(`${key}Abstract`)}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setModalIndex(i);
+                            }}
+                            className="mt-4 ml-5 md:ml-6 text-xs font-medium text-accent hover:underline"
+                          >
+                            {t("viewAbstract")} →
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+
       </div>
 
-      {publicationKeys.map((key, i) => (
+      {sortedKeys.map((key, i) => (
         <AbstractModal
           key={key}
-          isOpen={openIndex === i}
-          onClose={() => setOpenIndex(null)}
+          isOpen={modalIndex === i}
+          onClose={() => setModalIndex(null)}
           title={t(`${key}Title`)}
           date={t(`${key}Date`)}
           abstract={t(`${key}Abstract`)}

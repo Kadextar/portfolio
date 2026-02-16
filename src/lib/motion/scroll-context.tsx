@@ -33,12 +33,15 @@ export function ScrollControllerProvider({ children }: { children: ReactNode }) 
     let lenisInstance: import("lenis").default | null = null;
 
     const init = async () => {
+      const reduceMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const Lenis = (await import("lenis")).default;
       const lenis = new Lenis({
-        duration: motionConfig.lenis.duration,
+        duration: reduceMotion ? 0 : motionConfig.lenis.duration,
         easing: motionConfig.lenis.easing,
         orientation: "vertical",
-        smoothWheel: true,
+        smoothWheel: !reduceMotion,
       });
       lenisRef.current = lenis;
       lenisInstance = lenis;

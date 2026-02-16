@@ -201,3 +201,42 @@ body {
 .btn-glow:hover {
   border-color: rgba(255, 255, 255, 0.12);
 }
+
+/* Respect user preference: reduce motion (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Print / Save as PDF — clean CV-style output */
+@media print {
+  body {
+    background: #fff;
+    color: #111;
+  }
+  main {
+    padding-top: 0 !important;
+  }
+  a[href]::after {
+    content: none;
+  }
+  .section-gradient-warm::before,
+  .section-gradient-cool::before,
+  .section-gradient-accent::before {
+    display: none !important;
+  }
+  .glass,
+  .glass-strong,
+  .glass-glow {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+}

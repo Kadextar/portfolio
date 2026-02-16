@@ -23,6 +23,25 @@ export function generateStaticParams() {
 const BASE_URL = "https://azamatsatullaev.com";
 const LOCALES_META = ["en", "ru", "uz"] as const;
 
+const PERSON_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Azamat Satullaev",
+  url: BASE_URL,
+  jobTitle: "Hospitality & Management",
+  email: "kadextar@gmail.com",
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Samarkand Institute of Economics and Service",
+  },
+  sameAs: [
+    "https://linkedin.com/in/kadextar",
+    "https://instagram.com/a_satullayev",
+    "https://youtube.com/@kadextar",
+    "https://open.spotify.com/user/31wj6kq2rjs5dqcusctsvmofqsye",
+  ],
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const titles: Record<string, string> = {
@@ -53,6 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: descriptions[locale] ?? descriptions.en,
       locale: locale === "en" ? "en_US" : locale === "ru" ? "ru_RU" : "uz_UZ",
       url: canonical,
+      type: "website",
     },
   };
 }
@@ -69,6 +89,10 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
+      />
       <LocaleSync locale={locale} />
       <LocaleTransitionProvider>
         <MotionProvider>

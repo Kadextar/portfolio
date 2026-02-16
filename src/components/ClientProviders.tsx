@@ -7,7 +7,6 @@ import { LoadingScreen } from "./LoadingScreen";
 import { PageTransition } from "./PageTransition";
 import { DynamicBackground, WebGLBackground } from "./background";
 import { CustomCursor } from "./CustomCursor";
-import { AmbientAudio } from "./AmbientAudio";
 import { LocaleTransitionContext } from "./LocaleTransitionContext";
 import { motionConfig } from "@/lib/motion";
 import { useMouseDrift } from "@/hooks/useMouseDrift";
@@ -54,7 +53,6 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <CustomCursor />
-      <AmbientAudio />
       {/* Cinematic overlay: fade to dark on exit, fade out on enter — no white flash */}
       <motion.div
         className="pointer-events-none fixed inset-0 z-[9990] bg-[#0a0a0a]"
@@ -90,7 +88,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="noise-overlay" aria-hidden />
+      <div className="noise-overlay print:hidden" aria-hidden />
     </>
   );
 }
