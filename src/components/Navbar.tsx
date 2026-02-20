@@ -46,6 +46,12 @@ export function Navbar() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={headerStyle}
     >
+      <a
+        href="#main"
+        className="sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:w-auto focus:h-auto focus:p-4 focus:m-0 focus:overflow-visible focus:[clip:auto] focus:whitespace-normal focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-white"
+      >
+        {t("skipToContent")}
+      </a>
       <nav
         className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4"
         aria-label="Main navigation"
@@ -76,7 +82,7 @@ export function Navbar() {
               onClick={handleWork}
               className={cn(
                 "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px]",
-                "text-white"
+                "text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
               )}
             >
               <motion.span
@@ -91,7 +97,7 @@ export function Navbar() {
               href="/"
               className={cn(
                 "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center",
-                "text-zinc-400 hover:text-white"
+                "text-zinc-400 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
               )}
             >
               <span className="relative z-10">{t("work")}</span>
@@ -102,7 +108,7 @@ export function Navbar() {
             role="tab"
             aria-selected={segment === "info"}
             className={cn(
-              "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center",
+              "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
               segment === "info" ? "text-white" : "text-zinc-400 hover:text-zinc-300"
             )}
           >
@@ -120,7 +126,7 @@ export function Navbar() {
             role="tab"
             aria-selected={segment === "contact"}
             className={cn(
-              "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center",
+              "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
               segment === "contact" ? "text-white" : "text-zinc-400 hover:text-zinc-300"
             )}
           >
@@ -140,7 +146,7 @@ export function Navbar() {
           <a
             href="/resume.pdf"
             download
-            className={cn(btnGroupClass, "text-xs font-medium px-3")}
+            className="flex h-10 items-center rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-medium text-zinc-300 backdrop-blur-sm transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 shrink-0"
             aria-label={t("downloadResume")}
           >
             {t("downloadResume")}

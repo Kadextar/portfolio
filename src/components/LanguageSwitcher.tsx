@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { LocaleTransitionContext } from "./LocaleTransitionContext";
 
 const locales: Locale[] = ["en", "ru", "uz"];
+const LOCALE_STORAGE_KEY = "portfolio-locale";
 
 export function LanguageSwitcher() {
   const effectiveLocale = useLocale() as Locale;
@@ -15,6 +16,11 @@ export function LanguageSwitcher() {
 
   const switchLocale = (locale: Locale) => {
     if (locale === effectiveLocale) return;
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+      } catch (_) {}
+    }
     startLocaleTransition(locale);
   };
 

@@ -1,6 +1,7 @@
 {
   "nav": {
     "fullName": "Azamat Satullaev",
+    "skipToContent": "Skip to main content",
     "downloadResume": "Resume",
     "work": "Work",
     "info": "Info",
@@ -115,9 +116,18 @@
     "schedyTitle": "Schedy",
     "schedyTag": "Smart academic scheduling",
     "schedyDesc": "Productivity-focused scheduling system for students to manage academic workflow.",
+    "schedyProblem": "Students need one place to plan classes, deadlines, and get AI help with essays, notes, and presentations.",
+    "schedyRole": "Solo founder and developer: design, iOS app, schedule import (PDF/Excel), agenda, notifications, Free/Pro/Max plans.",
+    "schedyOutcome": "iOS app (App Store soon); productivity and easier life for students.",
     "kadextarTitle": "Kadextar",
-    "kadextarTag": "YouTube channel",
-    "kadextarDesc": "Educational content on productivity, digital tools, and self-development."
+    "kadextarTag": "Personal brand",
+    "kadextarDesc": "Educational content on productivity, digital tools, and self-development.",
+    "kadextarProblem": "Share expertise and motivation across different audiences and formats.",
+    "kadextarRole": "Creator: YouTube (economics lessons), Telegram (varied topics), Instagram (design and motivation).",
+    "kadextarOutcome": "Single brand across platforms with focused content per channel.",
+    "contextLabel": "Context",
+    "roleLabel": "Role",
+    "outcomeLabel": "Outcome"
   },
   "digitalInnovation": {
     "label": "Digital & Innovation",
@@ -258,5 +268,16 @@
     "spotify": "Spotify",
     "instagram": "Instagram",
     "youtube": "YouTube"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist or has been moved.",
+    "cta": "Back to home"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "cta": "Try again",
+    "home": "Back to home"
   }
 }

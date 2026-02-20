@@ -236,15 +236,6 @@ export function InfoPageClient() {
           </p>
         </Section>
 
-        {/* 6.5 Рекомендация / отзыв */}
-        <Section title={t("testimonialTitle")}>
-          <blockquote className="border-l-2 border-accent/50 pl-4 py-2 text-zinc-300 text-sm leading-relaxed italic">
-            {'"'}{t("testimonialQuote")}{'"'}
-          </blockquote>
-          <p className="mt-2 text-zinc-500 text-xs font-medium">{t("testimonialAuthor")}</p>
-          <p className="text-zinc-600 text-xs">{t("testimonialRole")}</p>
-        </Section>
-
         {/* 7. Соцсети и каналы */}
         <Section title={t("socialTitle")}>
           <ul className="flex flex-wrap gap-3">

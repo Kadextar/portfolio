@@ -1,0 +1,17 @@
+{
+  "name": "Azamat Satullaev — Portfolio",
+  "short_name": "Satullaev",
+  "description": "Hospitality & Management Researcher. Strategy, analytics, and technology.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050506",
+  "theme_color": "#c9a227",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -37,7 +37,8 @@ html {
 body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  /* font-display: swap set in layout (next/font); fallback for FOUT */
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -201,6 +202,14 @@ body {
 .btn-glow:hover {
   border-color: rgba(255, 255, 255, 0.12);
 }
+
+/* Keyboard focus: visible ring for focus-visible (accessibility) */
+a:focus-visible,
+button:focus-visible,
+[role="tab"]:focus-visible {
+  outline: none;
+}
+/* Components set their own focus-visible:ring; this ensures outline is off so ring shows */
 
 /* Respect user preference: reduce motion (accessibility) */
 @media (prefers-reduced-motion: reduce) {

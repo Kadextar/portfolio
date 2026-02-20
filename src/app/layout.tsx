@@ -21,6 +21,7 @@ export const metadata = {
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
+  manifest: "/manifest.json",
 };
 
 export default async function RootLayout({

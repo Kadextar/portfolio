@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ClientProviders } from "@/components/ClientProviders";
 import { LocaleSync } from "@/components/LocaleSync";
+import { LocaleRestore } from "@/components/LocaleRestore";
 import { LocaleTransitionProvider } from "@/components/LocaleTransitionContext";
 import { MotionProvider } from "@/providers/MotionProvider";
 
@@ -94,11 +95,12 @@ export default async function LocaleLayout({ children, params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
       />
       <LocaleSync locale={locale} />
+          <LocaleRestore />
       <LocaleTransitionProvider>
         <MotionProvider>
           <Navbar />
           <ClientProviders>
-            <main className="relative min-h-screen">{children}</main>
+            <main id="main" className="relative min-h-screen">{children}</main>
           </ClientProviders>
           <Footer />
           <ScrollToTop />

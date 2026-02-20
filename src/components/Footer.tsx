@@ -18,19 +18,19 @@ export function Footer() {
           <div className="flex items-center gap-8">
             <I18nLink
               href="#about"
-              className="text-zinc-500 hover:text-accent text-sm transition-colors"
+              className="text-zinc-500 hover:text-accent text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 focus-visible:rounded"
             >
               {t("about")}
             </I18nLink>
             <I18nLink
               href="#research"
-              className="text-zinc-500 hover:text-accent text-sm transition-colors"
+              className="text-zinc-500 hover:text-accent text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 focus-visible:rounded"
             >
               {t("research")}
             </I18nLink>
             <I18nLink
               href="/contact"
-              className="text-zinc-500 hover:text-accent text-sm transition-colors"
+              className="text-zinc-500 hover:text-accent text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 focus-visible:rounded"
             >
               {t("contact")}
             </I18nLink>

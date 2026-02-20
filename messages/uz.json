@@ -1,6 +1,7 @@
 {
   "nav": {
     "fullName": "Azamat Satullayev",
+    "skipToContent": "Asosiy kontentga o'tish",
     "downloadResume": "Rezyume",
     "work": "Ishlar",
     "info": "Info",
@@ -115,9 +116,18 @@
     "schedyTitle": "Schedy",
     "schedyTag": "Aqlli akademik rejalashtirish",
     "schedyDesc": "Talabalar uchun samaradorlik va o'qish jarayonini boshqarish tizimi.",
+    "schedyProblem": "Talabalar uchun bitta joy kerak: darslarni va muddatlarni rejalashtirish va referat, konspekt, prezentatsiya bo'yicha AI yordami.",
+    "schedyRole": "Egasi va dasturchi: dizayn, iOS ilova, jadval import (PDF/Excel), agenda, bildirishnomalar, Free/Pro/Max tariflar.",
+    "schedyOutcome": "iOS ilova (tez orada App Store'da); talabalar uchun samaradorlik va hayotni osonlashtirish.",
     "kadextarTitle": "Kadextar",
-    "kadextarTag": "YouTube kanal",
-    "kadextarDesc": "Samaradorlik, raqamli vositalar va o'zini rivojlantirish haqida ta'limiy kontent."
+    "kadextarTag": "Shaxsiy brend",
+    "kadextarDesc": "Samaradorlik, raqamli vositalar va o'zini rivojlantirish haqida ta'limiy kontent.",
+    "kadextarProblem": "Turli auditoriya va formatlarda bilim va motivatsiyani ulashish.",
+    "kadextarRole": "Muallif: YouTube (iqtisod darslari), Telegram (turli mavzular), Instagram (dizayn va motivatsiya).",
+    "kadextarOutcome": "Barcha platformalarda yagona brend, har bir kanalda maqsadli kontent.",
+    "contextLabel": "Kontekst",
+    "roleLabel": "Rol",
+    "outcomeLabel": "Natija"
   },
   "digitalInnovation": {
     "label": "Raqamli va innovatsiya",
@@ -258,5 +268,16 @@
     "spotify": "Spotify",
     "instagram": "Instagram",
     "youtube": "YouTube"
+  },
+  "notFound": {
+    "title": "Sahifa topilmadi",
+    "description": "Qidirayotgan sahifangiz mavjud emas yoki boshqa manzilga ko'chirilgan.",
+    "cta": "Bosh sahifaga qaytish"
+  },
+  "error": {
+    "title": "Nimadir xato ketdi",
+    "description": "Kutilmagan xatolik. Sahifani yangilab ko'ring.",
+    "cta": "Qayta urinish",
+    "home": "Bosh sahifaga"
   }
 }

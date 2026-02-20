@@ -1,12 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useEffect, useContext, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { LoadingScreen } from "./LoadingScreen";
 import { PageTransition } from "./PageTransition";
-import { DynamicBackground, WebGLBackground } from "./background";
+import { DynamicBackground } from "./background";
+
+const WebGLBackground = dynamic(
+  () => import("@/components/background/WebGLBackground").then((m) => ({ default: m.WebGLBackground })),
+  { ssr: false }
+);
+
 import { CustomCursor } from "./CustomCursor";
+import { PwaSwRegister } from "./PwaSwRegister";
 import { LocaleTransitionContext } from "./LocaleTransitionContext";
 import { motionConfig } from "@/lib/motion";
 import { useMouseDrift } from "@/hooks/useMouseDrift";
@@ -53,6 +61,7 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <CustomCursor />
+      <PwaSwRegister />
       {/* Cinematic overlay: fade to dark on exit, fade out on enter — no white flash */}
       <motion.div
         className="pointer-events-none fixed inset-0 z-[9990] bg-[#0a0a0a]"
