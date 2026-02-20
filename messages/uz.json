@@ -127,7 +127,12 @@
     "kadextarOutcome": "Barcha platformalarda yagona brend, har bir kanalda maqsadli kontent.",
     "contextLabel": "Kontekst",
     "roleLabel": "Rol",
-    "outcomeLabel": "Natija"
+    "outcomeLabel": "Natija",
+    "backToSite": "Orqaga",
+    "schedyCta": "Tez orada App Store'da",
+    "watchYouTube": "YouTube'da ko'rish",
+    "telegram": "Telegram",
+    "instagram": "Instagram"
   },
   "digitalInnovation": {
     "label": "Raqamli va innovatsiya",

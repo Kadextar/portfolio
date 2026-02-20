@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { localeNames, type Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { LocaleTransitionContext } from "./LocaleTransitionContext";
+import { trackEvent, PlausibleEvents } from "@/lib/plausible";
 
 const locales: Locale[] = ["en", "ru", "uz"];
 const LOCALE_STORAGE_KEY = "portfolio-locale";
@@ -16,6 +17,7 @@ export function LanguageSwitcher() {
 
   const switchLocale = (locale: Locale) => {
     if (locale === effectiveLocale) return;
+    trackEvent(PlausibleEvents.LanguageSwitched, { locale });
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem(LOCALE_STORAGE_KEY, locale);

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { CinematicSection } from "@/components/effects/CinematicSection";
+import { trackEvent, PlausibleEvents } from "@/lib/plausible";
 
 export function Contact() {
   const t = useTranslations("contact");
@@ -16,6 +17,7 @@ export function Contact() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    trackEvent(PlausibleEvents.ContactFormSent);
     setStatus("opening");
     const form = e.currentTarget;
     const name = (form.elements.namedItem("name") as HTMLInputElement)?.value ?? "";

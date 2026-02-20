@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { gsap } from "gsap";
 import { motionConfig } from "@/lib/motion";
+import { trackEvent, PlausibleEvents } from "@/lib/plausible";
 
 const ROTATING_KEYS = ["rotatingWord1", "rotatingWord2", "rotatingWord3", "rotatingWord4"] as const;
 const ROTATE_INTERVAL_MS = 3400;
@@ -193,6 +194,7 @@ export function Hero() {
         >
           <Link
             href="/contact"
+            onClick={() => trackEvent(PlausibleEvents.ContactCTA)}
             className="inline-flex h-12 min-w-[140px] items-center justify-center rounded-md bg-accent px-10 text-sm font-medium text-accent-foreground transition-colors duration-300 hover:bg-accent-light"
           >
             {t("getInTouch")}

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AmbientAudio } from "./AmbientAudio";
+import { ThemeToggle } from "./ThemeToggle";
+import { trackEvent, PlausibleEvents } from "@/lib/plausible";
 
 type NavSegment = "work" | "info" | "contact";
 
@@ -19,6 +21,7 @@ export function Navbar() {
   const segment: NavSegment = isContactPage ? "contact" : isInfoPage ? "info" : "work";
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -26,10 +29,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleWork = () => {
-    if (isInfoPage) return; // Link handles navigation
+  useEffect(() => {
+    if (mobileMenuOpen) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  const handleWork = useCallback(() => {
+    if (isInfoPage) return;
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [isInfoPage]);
+
+  const closeMenu = useCallback(() => setMobileMenuOpen(false), []);
 
   const headerStyle = cn(
     "fixed top-0 left-0 right-0 z-50 transition-all duration-500 print:hidden",
@@ -53,26 +66,23 @@ export function Navbar() {
         {t("skipToContent")}
       </a>
       <nav
-        className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4"
+        className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-2 md:gap-4"
         aria-label="Main navigation"
       >
-        {/* Left: name + subtitle */}
-        <Link
-          href="/"
-          className="flex flex-col min-w-0"
-        >
-          <span className="font-display text-lg md:text-xl font-semibold tracking-tight text-zinc-100 hover:text-accent transition-colors duration-200 truncate">
+        {/* Left: name — на мобиле с truncate, подзаголовок только на десктопе */}
+        <Link href="/" className="flex flex-col min-w-0 max-w-[60vw] md:max-w-none shrink-0">
+          <span className="font-display text-base md:text-lg lg:text-xl font-semibold tracking-tight text-zinc-100 hover:text-accent transition-colors duration-200 truncate">
             {t("fullName")}
           </span>
-          <span className="text-[10px] md:text-xs font-medium tracking-wide text-zinc-500 mt-0.5 line-clamp-2 max-w-[140px] sm:max-w-[180px] md:max-w-none">
+          <span className="hidden md:block text-[10px] md:text-xs font-medium tracking-wide text-zinc-500 mt-0.5 line-clamp-2 max-w-[140px] sm:max-w-[180px] lg:max-w-none">
             {tHero("subtitle")}
           </span>
         </Link>
 
-        {/* Center: Work | Info | Contact */}
+        {/* Desktop: center tabs */}
         <div
           role="tablist"
-          className="flex rounded-xl border border-white/10 bg-white/[0.06] p-1 backdrop-blur-sm"
+          className="hidden md:flex rounded-xl border border-white/10 bg-white/[0.06] p-1 backdrop-blur-sm"
         >
           {segment === "work" ? (
             <button
@@ -141,20 +151,111 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Right: resume + language + music */}
-        <div className="flex items-center gap-2">
+        {/* Desktop: resume + language + music */}
+        <div className="hidden md:flex items-center gap-2">
           <a
             href="/resume.pdf"
             download
+            onClick={() => trackEvent(PlausibleEvents.ResumeClicked)}
             className="flex h-10 items-center rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-xs font-medium text-zinc-300 backdrop-blur-sm transition-colors hover:border-white/15 hover:bg-white/[0.08] hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 shrink-0"
             aria-label={t("downloadResume")}
           >
             {t("downloadResume")}
           </a>
+          <ThemeToggle />
           <LanguageSwitcher />
           <AmbientAudio embedded className={btnGroupClass} />
         </div>
+
+        {/* Mobile: кнопка меню */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen((o) => !o)}
+          aria-expanded={mobileMenuOpen}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-zinc-300 backdrop-blur-sm transition-colors hover:bg-white/[0.08] hover:border-white/15 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 shrink-0"
+        >
+          {mobileMenuOpen ? (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
       </nav>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 md:hidden bg-black/80 backdrop-blur-sm"
+            onClick={closeMenu}
+            aria-hidden
+          >
+            <motion.div
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.2 }}
+              className="mt-20 mx-4 rounded-2xl border border-white/10 bg-zinc-900/95 p-6 shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="text-[10px] font-medium tracking-wider text-zinc-500 uppercase mb-4">{tHero("subtitle")}</p>
+              <div className="flex flex-col gap-1 mb-6">
+                {segment === "work" ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleWork();
+                      closeMenu();
+                    }}
+                    className="text-left px-3 py-2 rounded-lg text-sm font-medium text-white"
+                  >
+                    {t("work")}
+                  </button>
+                ) : (
+                  <Link href="/" onClick={closeMenu} className="block px-3 py-2 rounded-lg text-sm font-medium text-zinc-400 hover:text-white">
+                    {t("work")}
+                  </Link>
+                )}
+                <Link href="/info" onClick={closeMenu} className={`block px-3 py-2 rounded-lg text-sm font-medium ${segment === "info" ? "text-white" : "text-zinc-400 hover:text-white"}`}>
+                  {t("info")}
+                </Link>
+                <Link href="/contact" onClick={closeMenu} className={`block px-3 py-2 rounded-lg text-sm font-medium ${segment === "contact" ? "text-white" : "text-zinc-400 hover:text-white"}`}>
+                  {t("contact")}
+                </Link>
+              </div>
+              <a
+                href="/resume.pdf"
+                download
+                onClick={() => { trackEvent(PlausibleEvents.ResumeClicked); closeMenu(); }}
+                className="flex items-center justify-center w-full h-11 rounded-xl border border-white/10 bg-white/[0.06] text-sm font-medium text-zinc-300 hover:bg-white/[0.08] hover:text-accent mb-6"
+              >
+                {t("downloadResume")}
+              </a>
+              <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/10">
+                <span className="text-xs text-zinc-500">Theme</span>
+                <ThemeToggle />
+              </div>
+              <div className="flex items-center justify-between gap-4 pt-3 border-t border-white/10">
+                <span className="text-xs text-zinc-500">Language</span>
+                <LanguageSwitcher />
+              </div>
+              <div className="flex items-center justify-between gap-4 pt-3">
+                <span className="text-xs text-zinc-500">Sound</span>
+                <AmbientAudio embedded className={btnGroupClass} />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

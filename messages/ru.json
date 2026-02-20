@@ -127,7 +127,12 @@
     "kadextarOutcome": "Единый бренд на всех платформах с целевым контентом в каждом канале.",
     "contextLabel": "Контекст",
     "roleLabel": "Роль",
-    "outcomeLabel": "Результат"
+    "outcomeLabel": "Результат",
+    "backToSite": "Назад",
+    "schedyCta": "Скоро в App Store",
+    "watchYouTube": "Смотреть на YouTube",
+    "telegram": "Telegram",
+    "instagram": "Instagram"
   },
   "digitalInnovation": {
     "label": "Цифра и инновации",

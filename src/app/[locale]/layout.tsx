@@ -43,6 +43,16 @@ const PERSON_JSON_LD = {
   ],
 };
 
+const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Azamat Satullaev — Portfolio",
+  url: BASE_URL,
+  description: "Hospitality & Management researcher. Strategy, analytics, and technology for the future of service industries.",
+  publisher: { "@type": "Person", name: "Azamat Satullaev" },
+  inLanguage: ["en", "ru", "uz"],
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const titles: Record<string, string> = {
@@ -93,6 +103,10 @@ export default async function LocaleLayout({ children, params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
       />
       <LocaleSync locale={locale} />
           <LocaleRestore />

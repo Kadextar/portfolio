@@ -2,6 +2,8 @@ import { Inter, Playfair_Display } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Analytics } from "@/components/Analytics";
+import { ResourceHints } from "@/components/ResourceHints";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,9 +41,13 @@ export default async function RootLayout({
     <html lang={lang} className="dark" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[#050506] text-zinc-100 min-h-screen`}
+        suppressHydrationWarning
       >
+        <ResourceHints />
         <Analytics />
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

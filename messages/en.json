@@ -127,7 +127,12 @@
     "kadextarOutcome": "Single brand across platforms with focused content per channel.",
     "contextLabel": "Context",
     "roleLabel": "Role",
-    "outcomeLabel": "Outcome"
+    "outcomeLabel": "Outcome",
+    "backToSite": "Back",
+    "schedyCta": "Coming to App Store",
+    "watchYouTube": "Watch on YouTube",
+    "telegram": "Telegram",
+    "instagram": "Instagram"
   },
   "digitalInnovation": {
     "label": "Digital & Innovation",

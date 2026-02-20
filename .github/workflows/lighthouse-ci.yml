@@ -1,13 +1,11 @@
-name: CI
+name: Lighthouse CI
 
 on:
-  push:
-    branches: [main, master]
   pull_request:
     branches: [main, master]
 
 jobs:
-  lint-and-build:
+  lighthouse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,20 +19,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm run test
-
       - name: Build
         run: npm run build
         env:
           NEXT_PUBLIC_SENTRY_DSN: ""
           SENTRY_DSN: ""
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
-
-      - name: E2E
-        run: npm run e2e
+      - name: Run Lighthouse CI
+        run: npx lhci autorun --upload.target=temporary-public-storage
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

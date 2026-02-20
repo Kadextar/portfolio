@@ -5,5 +5,8 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Production: main/master branch. Branch deploys (e.g. develop) = staging.
+# Enable "Branch deploys" in Netlify: Site settings → Build & deploy → Continuous deployment.
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
