@@ -30,8 +30,13 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_SENTRY_DSN: ""
-          SENTRY_DSN: ""
+          NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN || '' }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN || '' }}
+          # Optional: SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT for source maps upload; SENTRY_RELEASE for release health (e.g. github.sha).
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_RELEASE: ${{ github.sha }}
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium

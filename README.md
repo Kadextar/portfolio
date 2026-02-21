@@ -21,6 +21,7 @@ npm run dev
 | `npm run lint` | ESLint |
 | `npm run test` | Jest (компоненты + smoke) |
 | `npm run e2e` | E2E-тесты (Playwright). Перед первым запуском: `npx playwright install` |
+| `npm run analyze` | Анализ бандла (открывает отчёт в браузере) |
 
 ## Переменные окружения
 
@@ -54,5 +55,7 @@ npm run dev
 ## Дополнительно
 
 - **PWA:** `manifest.json` и `sw.js` — можно установить сайт на устройство.
-- **CI:** в `.github/workflows/ci.yml` настроены lint, test, build и E2E при push/PR в main (или master).
-- **E2E:** тесты в `e2e/smoke.spec.ts`. Перед первым запуском локально выполни `npx playwright install` (скачиваются браузеры).
+- **CI:** в `.github/workflows/ci.yml` настроены lint, test, build и E2E при push/PR в main (или master). Для Sentry release health добавь в репозитории секреты: `SENTRY_AUTH_TOKEN`, при необходимости `SENTRY_ORG`, `SENTRY_PROJECT`.
+- **E2E:** тесты в `e2e/smoke.spec.ts` и a11y в `e2e/a11y.spec.ts`. Перед первым запуском локально выполни `npx playwright install` (скачиваются браузеры).
+- **Staging:** ветка `develop` (или другая) может деплоиться на Netlify отдельно — включи Branch deploys в настройках сайта.
+- **Изображения:** в проде используется `sharp` для оптимизации (предупреждение Next.js снято).

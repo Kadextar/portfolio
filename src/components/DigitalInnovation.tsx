@@ -112,7 +112,7 @@ export function DigitalInnovation() {
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
+          <p className="mt-4 text-zinc-400 max-w-2xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <motion.div

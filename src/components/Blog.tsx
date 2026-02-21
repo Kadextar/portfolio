@@ -31,7 +31,7 @@ export function Blog() {
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
               {t("title")}
             </h2>
-            <p className="mt-4 text-zinc-500 max-w-xl">{t("subtitle")}</p>
+            <p className="mt-4 text-zinc-400 max-w-xl">{t("subtitle")}</p>
           </div>
           <a
             href="#"
@@ -62,13 +62,13 @@ export function Blog() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                   <CardContent className="p-6">
-                    <span className="text-zinc-500 text-xs">
+                    <span className="text-zinc-400 text-xs">
                       {t(`post${i}Date`)} · {t(`post${i}ReadTime`)} {t("minRead")}
                     </span>
                     <h3 className="mt-2 text-lg font-medium text-white group-hover:text-accent transition-colors duration-200 line-clamp-2">
                       {t(`post${i}Title`)}
                     </h3>
-                    <p className="mt-2 text-zinc-500 text-sm line-clamp-2">
+                    <p className="mt-2 text-zinc-400 text-sm line-clamp-2">
                       {t(`post${i}Excerpt`)}
                     </p>
                   </CardContent>

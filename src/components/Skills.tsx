@@ -50,7 +50,7 @@ export function Skills() {
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
+          <p className="mt-4 text-zinc-400 max-w-2xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         {/* 3-column categories first */}
@@ -132,7 +132,7 @@ export function Skills() {
           className="space-y-10"
         >
           <section>
-            <p className="text-zinc-500 text-xs font-medium tracking-[0.2em] uppercase mb-4">
+            <p className="text-zinc-400 text-xs font-medium tracking-[0.2em] uppercase mb-4">
               {t("stackLabel")}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -155,7 +155,7 @@ export function Skills() {
           </section>
 
           <section>
-            <p className="text-zinc-500 text-xs font-medium tracking-[0.2em] uppercase mb-4">
+            <p className="text-zinc-400 text-xs font-medium tracking-[0.2em] uppercase mb-4">
               {t("toolsLabel")}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

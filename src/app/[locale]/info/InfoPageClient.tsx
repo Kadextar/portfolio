@@ -192,7 +192,7 @@ export function InfoPageClient() {
               >
                 <LanguageFlag flag={flag} />
                 <span className="font-medium">{t(key)}</span>
-                <span className="text-zinc-500 text-xs">—</span>
+                <span className="text-zinc-400 text-xs">—</span>
                 <span className="text-accent/90 text-xs">{t(levelKey)}</span>
               </li>
             ))}

@@ -1,5 +1,6 @@
 const createNextIntlPlugin = require("next-intl/plugin");
 const { withSentryConfig } = require("@sentry/nextjs");
+const bundleAnalyzer = require("@next/bundle-analyzer")({ enabled: process.env.ANALYZE === "true" });
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -23,6 +24,7 @@ const nextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           {
+            // To enforce CSP (block violations), rename to "Content-Security-Policy" after verifying report-only in Sentry/browser.
             key: "Content-Security-Policy-Report-Only",
             value: [
               "default-src 'self'",
@@ -62,4 +64,6 @@ const sentryOptions = {
   project: process.env.SENTRY_PROJECT,
 };
 
-module.exports = withSentryConfig(withNextIntl(nextConfig), sentryOptions);
+const configWithIntl = withNextIntl(nextConfig);
+const configWithAnalyzer = bundleAnalyzer(configWithIntl);
+module.exports = withSentryConfig(configWithAnalyzer, sentryOptions);

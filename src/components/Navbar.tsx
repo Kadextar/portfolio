@@ -74,21 +74,20 @@ export function Navbar() {
           <span className="font-display text-base md:text-lg lg:text-xl font-semibold tracking-tight text-zinc-100 hover:text-accent transition-colors duration-200 truncate">
             {t("fullName")}
           </span>
-          <span className="hidden md:block text-[10px] md:text-xs font-medium tracking-wide text-zinc-500 mt-0.5 line-clamp-2 max-w-[140px] sm:max-w-[180px] lg:max-w-none">
+          <span className="hidden md:block text-[10px] md:text-xs font-medium tracking-wide text-zinc-400 mt-0.5 line-clamp-2 max-w-[140px] sm:max-w-[180px] lg:max-w-none">
             {tHero("subtitle")}
           </span>
         </Link>
 
-        {/* Desktop: center tabs */}
+        {/* Desktop: center nav (no tablist to avoid aria-required-children with <a>) */}
         <div
-          role="tablist"
           className="hidden md:flex rounded-xl border border-white/10 bg-white/[0.06] p-1 backdrop-blur-sm"
+          role="group"
+          aria-label="Main sections"
         >
           {segment === "work" ? (
             <button
               type="button"
-              role="tab"
-              aria-selected
               onClick={handleWork}
               className={cn(
                 "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px]",
@@ -115,8 +114,6 @@ export function Navbar() {
           )}
           <Link
             href="/info"
-            role="tab"
-            aria-selected={segment === "info"}
             className={cn(
               "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
               segment === "info" ? "text-white" : "text-zinc-400 hover:text-zinc-300"
@@ -133,8 +130,6 @@ export function Navbar() {
           </Link>
           <Link
             href="/contact"
-            role="tab"
-            aria-selected={segment === "contact"}
             className={cn(
               "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors min-w-[56px] sm:min-w-[72px] md:min-w-[80px] block text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
               segment === "contact" ? "text-white" : "text-zinc-400 hover:text-zinc-300"
@@ -207,7 +202,7 @@ export function Navbar() {
               className="mt-20 mx-4 rounded-2xl border border-white/10 bg-zinc-900/95 p-6 shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="text-[10px] font-medium tracking-wider text-zinc-500 uppercase mb-4">{tHero("subtitle")}</p>
+              <p className="text-[10px] font-medium tracking-wider text-zinc-400 uppercase mb-4">{tHero("subtitle")}</p>
               <div className="flex flex-col gap-1 mb-6">
                 {segment === "work" ? (
                   <button
@@ -241,15 +236,15 @@ export function Navbar() {
                 {t("downloadResume")}
               </a>
               <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/10">
-                <span className="text-xs text-zinc-500">Theme</span>
+                <span className="text-xs text-zinc-400">Theme</span>
                 <ThemeToggle />
               </div>
               <div className="flex items-center justify-between gap-4 pt-3 border-t border-white/10">
-                <span className="text-xs text-zinc-500">Language</span>
+                <span className="text-xs text-zinc-400">Language</span>
                 <LanguageSwitcher />
               </div>
               <div className="flex items-center justify-between gap-4 pt-3">
-                <span className="text-xs text-zinc-500">Sound</span>
+                <span className="text-xs text-zinc-400">Sound</span>
                 <AmbientAudio embedded className={btnGroupClass} />
               </div>
             </motion.div>

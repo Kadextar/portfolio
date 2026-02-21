@@ -25,7 +25,7 @@ export default function Error({
       <h1 className="font-display text-3xl md:text-4xl font-normal text-white mb-2">
         {t("title")}
       </h1>
-      <p className="text-zinc-500 text-sm mb-8 max-w-sm">
+      <p className="text-zinc-400 text-sm mb-8 max-w-sm">
         {t("description")}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">

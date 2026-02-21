@@ -9,6 +9,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { ClientProviders } from "@/components/ClientProviders";
 import { LocaleSync } from "@/components/LocaleSync";
 import { LocaleRestore } from "@/components/LocaleRestore";
+import { LocaleAnnouncer } from "@/components/LocaleAnnouncer";
 import { LocaleTransitionProvider } from "@/components/LocaleTransitionContext";
 import { MotionProvider } from "@/providers/MotionProvider";
 
@@ -66,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     uz: "Strategiya, tahlil va texnologiyalar orqali xizmatlar sanoatining kelajagini shakllantirish.",
   };
   const canonical = `${BASE_URL}/${locale}`;
-  const languages: Record<string, string> = {};
+  const languages: Record<string, string> = { "x-default": `${BASE_URL}/en` };
   for (const loc of LOCALES_META) {
     languages[loc] = `${BASE_URL}/${loc}`;
   }
@@ -109,7 +110,8 @@ export default async function LocaleLayout({ children, params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
       />
       <LocaleSync locale={locale} />
-          <LocaleRestore />
+      <LocaleRestore />
+      <LocaleAnnouncer />
       <LocaleTransitionProvider>
         <MotionProvider>
           <Navbar />

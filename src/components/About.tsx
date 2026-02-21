@@ -47,7 +47,7 @@ export function About() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-zinc-500 leading-relaxed"
+              className="text-zinc-400 leading-relaxed"
             >
               {t("para2")}
             </motion.p>

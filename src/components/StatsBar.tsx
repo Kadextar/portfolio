@@ -61,7 +61,7 @@ export function StatsBar() {
                       duration={stat.duration}
                     />
                   </div>
-                  <p className="text-xs md:text-sm text-zinc-500 uppercase tracking-wider">
+                  <p className="text-xs md:text-sm text-zinc-400 uppercase tracking-wider">
                     {t(stat.labelKey)}
                   </p>
                 </>

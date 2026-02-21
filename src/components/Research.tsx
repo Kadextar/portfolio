@@ -54,7 +54,7 @@ export function Research() {
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-xl mx-auto text-sm">
+          <p className="mt-4 text-zinc-400 max-w-xl mx-auto text-sm">
             {t("subtitle")}
           </p>
         </motion.div>
@@ -78,13 +78,13 @@ export function Research() {
                   className="w-full flex items-center gap-4 md:gap-6 px-5 md:px-8 py-5 text-left hover:bg-white/[0.03] transition-colors duration-200 group"
                   aria-expanded={isExpanded}
                 >
-                  <span className="flex-shrink-0 text-zinc-500 text-xs font-medium tabular-nums w-20">
+                  <span className="flex-shrink-0 text-zinc-400 text-xs font-medium tabular-nums w-20">
                     {t(`${key}Date`)}
                   </span>
                   <span className="flex-1 min-w-0 font-medium text-white text-sm md:text-base leading-snug group-hover:text-accent/90 transition-colors line-clamp-2">
                     {t(`${key}Title`)}
                   </span>
-                  <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 text-zinc-500 group-hover:border-white/20 group-hover:text-accent/80 transition-colors">
+                  <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 text-zinc-400 group-hover:border-white/20 group-hover:text-accent/80 transition-colors">
                     <motion.span
                       animate={{ rotate: isExpanded ? 180 : 0 }}
                       transition={{ duration: 0.25 }}

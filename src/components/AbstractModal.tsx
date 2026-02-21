@@ -88,7 +88,7 @@ export function AbstractModal({
                 </button>
               </div>
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                <p className="text-zinc-500 text-sm font-medium">{date}</p>
+                <p className="text-zinc-400 text-sm font-medium">{date}</p>
                 <h2
                   id="modal-title"
                   className="text-xl md:text-2xl font-medium text-white leading-snug"

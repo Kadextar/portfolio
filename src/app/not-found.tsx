@@ -13,7 +13,7 @@ export default function NotFound() {
       <h1 className="font-display text-3xl md:text-4xl font-normal text-white mb-2">
         Страница не найдена
       </h1>
-      <p className="text-zinc-500 text-sm mb-8 max-w-sm">
+      <p className="text-zinc-400 text-sm mb-8 max-w-sm">
         Page not found. The link may be broken or the page has been moved.
       </p>
       <Link

@@ -99,7 +99,7 @@ export function Projects() {
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-2xl mx-auto">{t("subtitle")}</p>
+          <p className="mt-4 text-zinc-400 max-w-2xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <div className="space-y-8 max-w-5xl mx-auto">
@@ -110,7 +110,7 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="glass-glow hover:border-white/12 transition-colors duration-300 overflow-hidden">
+            <Card className="glass-glow hover:border-white/12 transition-all duration-300 overflow-hidden hover:scale-[1.01] focus-within:ring-2 focus-within:ring-accent/30 focus-within:ring-offset-2 focus-within:ring-offset-zinc-950">
               <div className="flex flex-col md:flex-row md:min-h-0">
                 <div className="md:w-[min(42%,320px)] shrink-0 bg-white/[0.03] p-4 md:p-5 flex flex-col justify-center">
                   <div className="grid grid-cols-3 gap-2 md:gap-2.5 max-w-[280px] mx-auto md:max-w-none">
@@ -143,7 +143,7 @@ export function Projects() {
                   <h3 className="mt-2 text-xl font-medium text-white">
                     {t("schedyTitle")}
                   </h3>
-                  <p className="mt-3 text-zinc-500 text-sm leading-relaxed">
+                  <p className="mt-3 text-zinc-400 text-sm leading-relaxed">
                     {t("schedyDesc")}
                   </p>
                   <dl className="mt-6 space-y-4">
@@ -189,7 +189,7 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.06 }}
           >
-            <Card className="glass-glow hover:border-white/12 transition-colors duration-300 h-full">
+            <Card className="glass-glow hover:border-white/12 transition-all duration-300 h-full hover:scale-[1.01] focus-within:ring-2 focus-within:ring-accent/30 focus-within:ring-offset-2 focus-within:ring-offset-zinc-950">
               <CardContent className="p-6 md:p-8">
                 <span className="text-accent text-xs font-medium tracking-wide uppercase">
                   {t("kadextarTag")}
@@ -197,7 +197,7 @@ export function Projects() {
                 <h3 className="mt-2 text-xl font-medium text-white">
                   {t("kadextarTitle")}
                 </h3>
-                <p className="mt-3 text-zinc-500 text-sm leading-relaxed">
+                <p className="mt-3 text-zinc-400 text-sm leading-relaxed">
                   {t("kadextarDesc")}
                 </p>
                 <dl className="mt-6 space-y-4">

@@ -47,7 +47,7 @@ export function LanguageSwitcher() {
             "relative px-3 py-1.5 text-xs font-medium rounded-full transition-colors duration-300",
             effectiveLocale === locale
               ? "text-accent"
-              : "text-zinc-500 hover:text-zinc-300"
+              : "text-zinc-400 hover:text-zinc-300"
           )}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.97 }}

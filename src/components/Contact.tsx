@@ -52,7 +52,7 @@ export function Contact() {
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-normal text-white">
             {t("title")}
           </h2>
-          <p className="mt-4 text-zinc-500 max-w-xl mx-auto">{t("subtitle")}</p>
+          <p className="mt-4 text-zinc-400 max-w-xl mx-auto">{t("subtitle")}</p>
         </motion.div>
 
         <motion.div
@@ -124,7 +124,7 @@ export function Contact() {
                     name="message"
                     rows={5}
                     required
-                    className="flex w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-colors resize-none"
+                    className="flex w-full rounded-md border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-zinc-400 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 transition-colors resize-none"
                     placeholder={t("placeholderMessage")}
                   />
                 </div>
@@ -132,7 +132,7 @@ export function Contact() {
                   type="submit"
                   disabled={status === "opening"}
                   size="lg"
-                  className="btn-glow transition-shadow duration-300"
+                  className="btn-glow transition-all duration-300 ease-out disabled:opacity-70 disabled:scale-[0.98]"
                   aria-busy={status === "opening"}
                   aria-live="polite"
                 >
@@ -144,7 +144,7 @@ export function Contact() {
             </CardContent>
           </Card>
 
-          <p className="text-zinc-500 text-xs font-medium tracking-[0.2em] uppercase mb-4 mt-12">
+          <p className="text-zinc-400 text-xs font-medium tracking-[0.2em] uppercase mb-4 mt-12">
             {tInfo("contactTitle")}
           </p>
           <div className="space-y-3">
@@ -153,7 +153,7 @@ export function Contact() {
               className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
               aria-label={tInfo("labelEmail")}
             >
-              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelEmail")}</span>
+              <span className="text-zinc-400 text-sm font-medium shrink-0 w-24">{tInfo("labelEmail")}</span>
               <span className="text-zinc-300 text-sm truncate">{tInfo("email")}</span>
             </a>
             <a
@@ -161,7 +161,7 @@ export function Contact() {
               className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
               aria-label={tInfo("labelPhone")}
             >
-              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelPhone")}</span>
+              <span className="text-zinc-400 text-sm font-medium shrink-0 w-24">{tInfo("labelPhone")}</span>
               <span className="text-zinc-300 text-sm">{tInfo("phone")}</span>
             </a>
             <a
@@ -171,7 +171,7 @@ export function Contact() {
               className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
               aria-label={tInfo("labelTelegram")}
             >
-              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelTelegram")}</span>
+              <span className="text-zinc-400 text-sm font-medium shrink-0 w-24">{tInfo("labelTelegram")}</span>
               <span className="text-zinc-300 text-sm">{tInfo("telegram")}</span>
             </a>
             <a
@@ -181,7 +181,7 @@ export function Contact() {
               className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 text-left hover:border-white/15 hover:bg-white/[0.06] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-[#050506]"
               aria-label={tInfo("labelLinkedIn")}
             >
-              <span className="text-zinc-500 text-sm font-medium shrink-0 w-24">{tInfo("labelLinkedIn")}</span>
+              <span className="text-zinc-400 text-sm font-medium shrink-0 w-24">{tInfo("labelLinkedIn")}</span>
               <span className="text-zinc-300 text-sm truncate">{tInfo("linkedin")}</span>
             </a>
           </div>
