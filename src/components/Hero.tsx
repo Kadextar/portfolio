@@ -121,9 +121,9 @@ export function Hero() {
     >
       {/* Ambient orbs */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[12%] left-[8%] w-[min(55vw,420px)] h-[min(55vw,420px)] rounded-full bg-accent/[0.07] blur-[110px] animate-float-slow" />
-        <div className="absolute bottom-[18%] right-[6%] w-[min(48vw,380px)] h-[min(48vw,380px)] rounded-full bg-accent/[0.05] blur-[100px] animate-float-slower" />
-        <div className="absolute top-[48%] left-[50%] w-[min(38vw,300px)] h-[min(38vw,300px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.03] blur-[85px]" />
+        <div className="absolute top-[12%] left-[8%] w-[min(55vw,420px)] h-[min(55vw,420px)] rounded-full bg-[#e5c483]/[0.05] blur-[120px] animate-float-slow" />
+        <div className="absolute bottom-[18%] right-[6%] w-[min(48vw,380px)] h-[min(48vw,380px)] rounded-full bg-[#00f5ff]/[0.03] blur-[110px] animate-float-slower" />
+        <div className="absolute top-[48%] left-[50%] w-[min(38vw,300px)] h-[min(38vw,300px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.02] blur-[85px]" />
       </div>
       <div
         className="absolute inset-0 z-0 opacity-[0.025]"
@@ -134,7 +134,7 @@ export function Hero() {
         }}
       />
       <div
-        className="absolute inset-0 z-[1] opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 z-[1] opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}
@@ -157,6 +157,13 @@ export function Hero() {
           {t("subtitle")}
         </p>
 
+        {/* Name explicitly added here */}
+        <h1 
+          className={`font-display text-5xl sm:text-6xl md:text-7xl text-white font-light tracking-wide mb-8 ${forceReveal ? "" : "opacity-0"}`}
+        >
+          Azamat Satullaev
+        </h1>
+
         {/* Main headline: одно слово в одну строку (на телефоне — мелче, чтобы не переносилось) */}
         <div
           ref={rotatingWrapRef}
@@ -174,7 +181,7 @@ export function Hero() {
                 ease: motionConfig.ease.default,
                 exit: { duration: 0.35 },
               }}
-              className="block text-accent/95 italic font-light whitespace-nowrap"
+              className="block text-accent/95 italic font-light whitespace-nowrap drop-shadow-[0_0_20px_rgba(229,196,131,0.15)]"
             >
               {t(ROTATING_KEYS[wordIndex])}
             </motion.span>
@@ -190,20 +197,30 @@ export function Hero() {
 
         <div
           ref={ctaRef}
-          className={`mt-24 sm:mt-28 flex justify-center items-center ${forceReveal ? "" : "opacity-0"}`}
+          className={`mt-16 sm:mt-20 flex flex-col sm:flex-row justify-center items-center gap-4 ${forceReveal ? "" : "opacity-0"}`}
         >
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent(PlausibleEvents.ResumeClicked)}
+            className="inline-flex h-12 w-full sm:w-auto min-w-[150px] items-center justify-center rounded-xl border border-white/10 bg-white/[0.02] px-10 text-sm font-light text-white transition-all duration-300 hover:bg-white/10 hover:border-white/20"
+          >
+            {t("resume")}
+          </a>
           <Link
             href="/contact"
             onClick={() => trackEvent(PlausibleEvents.ContactCTA)}
-            className="inline-flex h-12 min-w-[140px] items-center justify-center rounded-md bg-accent px-10 text-sm font-medium text-accent-foreground transition-colors duration-300 hover:bg-accent-light"
+            className="inline-flex h-12 w-full sm:w-auto min-w-[150px] items-center justify-center rounded-xl bg-accent px-10 text-sm font-medium text-black transition-all duration-300 shadow-gold-glow hover:bg-accent/80 hover:shadow-[0_0_25px_rgba(229,196,131,0.25)]"
           >
             {t("getInTouch")}
           </Link>
         </div>
 
+        {/* Modified scroll indicator positioning so it doesn't overlap on small screens */}
         <div
           ref={scrollIndicatorRef}
-          className={`absolute bottom-14 left-1/2 -translate-x-1/2 ${forceReveal ? "" : "opacity-0"}`}
+          className={`absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block ${forceReveal ? "" : "opacity-0"}`}
         >
           <div className="w-6 h-10 rounded-full border border-white/10 flex justify-center pt-2">
             <div className="w-1 h-2 bg-accent/60 rounded-full" />

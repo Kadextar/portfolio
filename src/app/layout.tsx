@@ -1,12 +1,12 @@
-import { Inter, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Analytics } from "@/components/Analytics";
 import { ResourceHints } from "@/components/ResourceHints";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
-const inter = Inter({
-  subsets: ["latin"],
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin", "latin-ext"],
   variable: "--font-geist-sans",
   display: "swap",
 });
@@ -40,7 +40,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} className="dark" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[#050506] text-zinc-100 min-h-screen`}
+        className={`${plusJakarta.variable} ${playfair.variable} font-sans antialiased bg-[#030303] text-zinc-100 min-h-screen`}
         suppressHydrationWarning
       >
         <ResourceHints />

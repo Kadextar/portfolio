@@ -27,10 +27,14 @@ const config: Config = {
           foreground: "hsl(var(--primary-foreground))",
         },
         accent: {
-          DEFAULT: "#c9a227",
-          light: "#d4af37",
-          muted: "rgba(201, 162, 39, 0.15)",
+          DEFAULT: "#e5c483",
+          light: "#f5e6c4",
+          muted: "rgba(229, 196, 131, 0.15)",
           foreground: "hsl(var(--accent-foreground))",
+        },
+        tech: {
+          DEFAULT: "#00f5ff",
+          muted: "rgba(0, 245, 255, 0.15)",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -108,6 +112,9 @@ const config: Config = {
       boxShadow: {
         glass: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
         "glass-lg": "0 8px 40px 0 rgba(0, 0, 0, 0.5)",
+        "gold-glow": "0 0 30px rgba(229, 196, 131, 0.1)",
+        "cyan-glow": "0 0 30px rgba(0, 245, 255, 0.1)",
+        "bento": "0 10px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
       },
     },
   },

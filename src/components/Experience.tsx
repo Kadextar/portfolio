@@ -6,7 +6,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CinematicSection } from "@/components/effects/CinematicSection";
 
 const experiences = [
-  { roleKey: "role1", orgKey: "org1", periodKey: "period1", descKey: "desc1" },
+  { 
+    roleKey: "role1", 
+    orgKey: "org1", 
+    periodKey: "period1", 
+    descKey: "desc1",
+    bullets: ["bullet1_1", "bullet1_2", "bullet1_3", "bullet1_4"]
+  },
 ] as const;
 
 export function Experience() {
@@ -49,9 +55,19 @@ export function Experience() {
                     <h3 className="text-xl font-medium text-white">
                       {t(exp.orgKey)}
                     </h3>
-                    <p className="mt-4 text-zinc-400 text-sm leading-relaxed">
+                    <p className="mt-4 text-zinc-400 text-sm leading-relaxed mb-4">
                       {t(exp.descKey)}
                     </p>
+                    {exp.bullets && (
+                      <ul className="space-y-2">
+                        {exp.bullets.map((bullet, idx) => (
+                          <li key={idx} className="flex gap-3 text-zinc-400 text-sm leading-relaxed">
+                            <span className="text-accent/60 mt-1.5">•</span>
+                            <span>{t(bullet as any)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </CardContent>
               </Card>
